@@ -1,0 +1,8 @@
+<div
+  id="fade"
+  [style.opacity]="backgroundService.fadeOpacity() / 100">
+</div>
+<canvas #canvas tabindex="0" id="canvas-background" class="bg-amber-50"></canvas>
+<div class="content">
+  <router-outlet />
+</div>

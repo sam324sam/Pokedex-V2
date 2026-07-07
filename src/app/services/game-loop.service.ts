@@ -1,0 +1,66 @@
+import { Injectable } from '@angular/core';
+// Servicios que usen los loops
+import { SpriteService } from './sprites.service';
+import { AnimationService } from './animation.service';
+@Injectable({
+  providedIn: 'root',
+})
+export class GameLoopService {
+  private lastTime = 0;
+  private running = false;
+  // Para el loop
+  private frameId: number | null = null;
+
+  constructor(
+    private readonly spriteService: SpriteService,
+    private readonly animationService: AnimationService,
+  ) {}
+
+  start() {
+    // Evitar el doble loop
+    if (this.running) {
+      stop();
+      return;
+    }
+    console.log('servicio game loop cargado');
+    this.running = true;
+    this.frameId = requestAnimationFrame(this.loop.bind(this));
+  }
+
+  stop() {
+    this.running = false;
+    // Cancelar lo que se este ejecutando en ese momento
+    if (this.frameId !== null) {
+      cancelAnimationFrame(this.frameId);
+      this.frameId = null;
+    }
+    // resetear para el delta al restablecer el servicio
+    this.lastTime = 0;
+  }
+
+  getStatus() {
+    return this.running;
+  }
+
+  private loop(time: number) {
+    if (!this.running) return;
+
+    let delta = time - this.lastTime;
+    this.lastTime = time;
+    // capar el delta para que no se pase de 100ms
+    delta = Math.min(delta, 100);
+
+    this.update(delta);
+    this.render();
+
+    this.frameId = requestAnimationFrame(this.loop.bind(this));
+  }
+
+  private update(delta: number) {
+    this.animationService.update(delta);
+  }
+
+  private render() {
+    this.spriteService.render();
+  }
+}
