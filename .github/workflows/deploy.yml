@@ -30,7 +30,7 @@ jobs:
         run: npm ci
 
       - name: Build Angular (production)
-        run: npm run build -- --configuration production --base-href=/Mokito-web/
+        run: npm run build -- --configuration production --base-href=/Pokedex-V2/
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
