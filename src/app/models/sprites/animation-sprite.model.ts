@@ -16,6 +16,8 @@ export interface AnimationFromJson {
   frames: number;
   animationType: string;
   description: string;
+  frameWidth: number;
+  frameHeight: number;
 }
 
 export interface AnimationSaveDb {

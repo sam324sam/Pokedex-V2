@@ -1,0 +1,47 @@
+{
+  "id": null,
+  "name": "background",
+  "active": true,
+  "tags": ["background"],
+  "sprite": {
+    "x": 0,
+    "y": 0,
+    "width": 0,
+    "height": 0,
+    "spriteScale": 1,
+    "canvasScale": 1,
+    "totalScale": 1,
+    "img": "assets/img/background.png",
+    "color": null,
+    "alpha": 100,
+    "currentAnimation": "home",
+    "currentFrame": 0,
+    "frameSpeed": 80,
+    "frameCounter": 0,
+    "zIndex": 0,
+    "rotation": null,
+    "animations": {
+      "home": {
+        "src": "assets/animations/background/home.png",
+        "frameWidth": 1100,
+        "frameHeight": 619,
+        "description": "",
+        "animationType": "loop"
+      },
+      "pokedex": {
+        "src": "assets/animations/background/pokedex.png",
+        "frameWidth": 498,
+        "frameHeight": 445,
+        "description": "",
+        "animationType": "loop"
+      },
+      "base": {
+        "src": "assets/animations/background/base.png",
+        "frameWidth": 1034,
+        "frameHeight": 615,
+        "description": "",
+        "animationType": "loop"
+      }
+    }
+  }
+}

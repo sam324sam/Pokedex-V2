@@ -1,6 +1,6 @@
-import { AfterViewInit, Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { BackgroundService } from '../../services/background.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-view',
@@ -8,19 +8,25 @@ import { BackgroundService } from '../../services/background.service';
   templateUrl: './home-view.html',
   styleUrl: './home-view.css',
 })
-export class HomeView implements AfterViewInit {
+export class HomeView implements OnInit {
   constructor(
     private readonly backgroundService: BackgroundService,
     private readonly router: Router,
   ) {}
-  async changeBackground() {
-    await this.backgroundService.fadeOut();
-    // router
-    this.router.navigate(['/pokedex']);
+
+  ngOnInit(): void {
+    let route = this.router.routerState.root;
+
+    while (route.firstChild) {
+      route = route.firstChild;
+    }
+
+    const background = route.snapshot.data['background'];
+    this.backgroundService.changeAnimation(background);
+    this.backgroundService.fadeIn();
   }
 
-  ngAfterViewInit(): void {
-    this.backgroundService.changeAnimation('home')
-    this.backgroundService.fadeIn();
+  changeView() {
+    this.backgroundService.changeView('pokedex');
   }
 }

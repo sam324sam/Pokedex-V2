@@ -6,9 +6,11 @@ export const routes: Routes = [
     {
         path: '',
         component: HomeView,
+        data: { background: 'home' }
     },
     {
         path: 'pokedex',
         component: PokedexView,
+        data: { background: 'pokedex' }
     }
 ];
