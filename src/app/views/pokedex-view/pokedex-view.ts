@@ -13,7 +13,7 @@ export class PokedexView implements OnInit {
   pokemonList: any[] = [];
   currentIndex: number = 0;
   currentPage: number = 1;
-  itemsPerPage: number = 36;
+  itemsPerPage: number = 42;
   constructor(
     private readonly backgroundService: BackgroundService,
     private readonly router: Router,
@@ -42,6 +42,11 @@ export class PokedexView implements OnInit {
 
   changeView() {
     this.backgroundService.changeView('pokedex');
+  }
+
+  onImageError(event: Event): void {
+    const img = event.target as HTMLImageElement;
+    img.src = 'assets/img/icons/not-found.png';
   }
 
   // Parte de la api
