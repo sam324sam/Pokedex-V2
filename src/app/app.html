@@ -1,7 +1,10 @@
 @if (dataService.isLoading()) {
 } @else {
   <div id="viewport">
-    <div id="all" [style.transform]="'scale(' + scale + ')'">
+    <div
+      id="all"
+      [style.transform]="'scale(' + scale + ')'"
+    >
       <div id="fade" [style.opacity]="backgroundService.fadeOpacity() / 100"></div>
 
       <canvas #canvas id="canvas-background" tabindex="0"> </canvas>

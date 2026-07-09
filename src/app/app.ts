@@ -43,6 +43,7 @@ export class App implements OnDestroy, OnInit {
   calculateScale(): number {
     const w = window.innerWidth;
     const h = window.innerHeight;
+    console.log(Math.min(w / 1600, h / 900))
     return Math.min(w / 1600, h / 900);
   }
 
