@@ -1,7 +1,23 @@
 #fade {
-  position: fixed;
+  position: absolute;
   inset: 0;
   background: black;
   pointer-events: none;
   z-index: 999;
+}
+
+#viewport {
+  width: 100dvw;
+  height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+#all {
+  width: 1600px;
+  height: 900px;
+  position: relative;
+  transform-origin: center center;
 }

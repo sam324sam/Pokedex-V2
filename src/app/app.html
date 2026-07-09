@@ -1,10 +1,14 @@
 @if (dataService.isLoading()) {
-  <!-- Pantalla de carga despues -->
-
 } @else {
-  <div id="fade" [style.opacity]="backgroundService.fadeOpacity() / 100"></div>
-  <canvas #canvas tabindex="0" id="canvas-background" class="bg-amber-50"></canvas>
-  <div class="content">
-    <router-outlet />
+  <div id="viewport">
+    <div id="all" [style.transform]="'scale(' + scale + ')'">
+      <div id="fade" [style.opacity]="backgroundService.fadeOpacity() / 100"></div>
+
+      <canvas #canvas id="canvas-background" tabindex="0"> </canvas>
+
+      <div class="content">
+        <router-outlet />
+      </div>
+    </div>
   </div>
 }

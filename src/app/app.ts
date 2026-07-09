@@ -1,6 +1,7 @@
 import {
   Component,
   ElementRef,
+  HostListener,
   OnDestroy,
   OnInit,
   signal,
@@ -23,6 +24,7 @@ export class App implements OnDestroy, OnInit {
   @ViewChild('canvas')
   private readonly canvasRef!: ElementRef<HTMLCanvasElement>;
   canvas!: HTMLCanvasElement;
+  scale: number = 1;
   constructor(
     private readonly gameLoopService: GameLoopService,
     private readonly spriteService: SpriteService,
@@ -38,8 +40,21 @@ export class App implements OnDestroy, OnInit {
     void this.initialize();
   }
 
+  calculateScale(): number {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    return Math.min(w / 1600, h / 900);
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.scale = this.calculateScale();
+  }
+
   private async initialize(): Promise<void> {
     await this.dataService.loadAllAssets();
+    this.scale = this.calculateScale();
+    console.log('escala', this.scale, 'el windows', window.innerWidth, window.innerHeight);
 
     // Esperar al jodido else
     await new Promise((resolve) => setTimeout(resolve));

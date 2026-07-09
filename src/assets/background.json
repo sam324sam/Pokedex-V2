@@ -30,15 +30,8 @@
       },
       "pokedex": {
         "src": "assets/animations/background/pokedex.png",
-        "frameWidth": 498,
-        "frameHeight": 445,
-        "description": "",
-        "animationType": "loop"
-      },
-      "base": {
-        "src": "assets/animations/background/base.png",
-        "frameWidth": 1034,
-        "frameHeight": 615,
+        "frameWidth": 1600,
+        "frameHeight": 900,
         "description": "",
         "animationType": "loop"
       }
