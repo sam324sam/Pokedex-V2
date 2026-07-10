@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { BackgroundService } from '../../services/background.service';
 import { Router } from '@angular/router';
 import { PokemonService } from '../../services/pokemon/pokemon.service';
+import { AnimationService } from '../../services/animation.service';
+import { PokemonInfoComponent } from './components/pokemon-info-component/pokemon-info-component';
 
 @Component({
   selector: 'app-pokedex-view',
-  imports: [],
+  imports: [PokemonInfoComponent],
   templateUrl: './pokedex-view.html',
   styleUrl: './pokedex-view.css',
 })
@@ -14,10 +16,12 @@ export class PokedexView implements OnInit {
   currentIndex: number = 0;
   currentPage: number = 1;
   itemsPerPage: number = 42;
+  showUi = signal(false);
   constructor(
     private readonly backgroundService: BackgroundService,
     private readonly router: Router,
     private readonly apiService: PokemonService,
+    private readonly animationService: AnimationService,
   ) {}
 
   ngOnInit(): void {
@@ -32,8 +36,23 @@ export class PokedexView implements OnInit {
     }
 
     const background = route.snapshot.data['background'];
-    this.backgroundService.changeAnimation(background);
     this.backgroundService.fadeIn();
+    this.backgroundService.changeAnimation(background);
+
+    if (
+      this.backgroundService.background.sprite.animationSprite[background].animationType == 'once'
+    ) {
+      this.backgroundService.background.sprite.defaultAnimation = 'pokedex';
+      setTimeout(
+        () => {
+          this.showUi.set(true);
+        },
+        this.animationService.getAnimationDuration(
+          this.backgroundService.background.sprite,
+          background,
+        ),
+      );
+    }
   }
 
   getPokemonId(url: string): number {

@@ -43,7 +43,6 @@ export class App implements OnDestroy, OnInit {
   calculateScale(): number {
     const w = window.innerWidth;
     const h = window.innerHeight;
-    console.log(Math.min(w / 1600, h / 900))
     return Math.min(w / 1600, h / 900);
   }
 
@@ -55,7 +54,6 @@ export class App implements OnDestroy, OnInit {
   private async initialize(): Promise<void> {
     await this.dataService.loadAllAssets();
     this.scale = this.calculateScale();
-    console.log('escala', this.scale, 'el windows', window.innerWidth, window.innerHeight);
 
     // Esperar al jodido else
     await new Promise((resolve) => setTimeout(resolve));

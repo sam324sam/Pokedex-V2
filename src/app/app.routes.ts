@@ -11,6 +11,6 @@ export const routes: Routes = [
     {
         path: 'pokedex',
         component: PokedexView,
-        data: { background: 'pokedex' }
+        data: { background: 'pokedex-init' }
     }
 ];

@@ -71,28 +71,32 @@ export class DataService {
     name: string,
     animation: AnimationFromJson,
   ): Promise<void> {
-    const img = new Image();
+    try {
+      const img = new Image();
 
-    await new Promise<void>((resolve, reject) => {
-      img.onload = () => resolve();
+      await new Promise<void>((resolve, reject) => {
+        img.onload = () => resolve();
 
-      img.onerror = () => {
-        console.error('No se pudo cargar:', name);
-        reject(new Error(name));
+        img.onerror = () => {
+          console.error('No se pudo cargar:', name);
+          reject(new Error(name));
+        };
+
+        img.src = animation.src;
+      });
+
+      entity.sprite.animationSprite[name] = {
+        image: img,
+        frameWidth: animation.frameWidth,
+        frameHeight: animation.frameHeight,
+        drawWidth: 0,
+        drawHeigt: 0,
+        frameCount: img.width / animation.frameWidth,
+        description: animation.description,
+        animationType: AnimationType[animation.animationType as keyof typeof AnimationType],
       };
-
-      img.src = animation.src;
-    });
-
-    entity.sprite.animationSprite[name] = {
-      image: img,
-      frameWidth: animation.frameWidth,
-      frameHeight: animation.frameHeight,
-      drawWidth: 0,
-      drawHeigt: 0,
-      frameCount: img.width / animation.frameWidth,
-      description: animation.description,
-      animationType: AnimationType[animation.animationType as keyof typeof AnimationType],
-    };
+    } catch (error) {
+      console.log(error, "en la animacion", name);
+    }
   }
 }

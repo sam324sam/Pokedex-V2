@@ -18,6 +18,7 @@ export interface Sprite {
 
   // índice de animación
   currentAnimation: string;
+  defaultAnimation:string;
   // frame actual
   currentFrame: number;
   // velocidad

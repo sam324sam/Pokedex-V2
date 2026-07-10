@@ -1,84 +1,103 @@
-<div class="grid grid-cols-2 gap-3 p-20 pl-23 pr-23 pt-24">
-  <section class="h-185 flex flex-col justify-between">
-    <!--Buscador-->
-    <div class="relative flex items-center justify-center mt-5">
-      <img
-        src="assets/img/icons/bar-1.png"
-        class="absolute inset-0 object-fill pixelated -z-10 select-none pointer-events-none h-10 w-full"
-        draggable="false"
-        alt="bar"
-      />
-      <div class="mt-2 flex flex-row justify-between w-[90%]">
-        <img src="assets/img/icons/search.png" alt="Lupa" />
-        <input type="text" name="" id="" placeholder="Buscar" />
-        <img src="assets/img/icons/search-2.png" alt="Lupa" />
-      </div>
-    </div>
-    <!-- lista -->
-    <div class="grid grid-cols-7 mb-1 gap-2">
-      @for (item of currentPokemons; track item.name) {
-        <div class="relative flex items-center justify-center">
-          <!-- Caja -->
-          <img
-            src="assets/img/icons/box-pokemon.png"
-            alt="box"
-            class="pixelated select-none cursor-pointer"
-            draggable="false"
-          />
-
-          <!-- Sprite -->
-          <img
-            class="absolute pixelated pointer-events-none"
-            [src]="
-              'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' +
-              getPokemonId(item.url) +
-              '.png'
-            "
-            [alt]="item.name"
-            (error)="onImageError($event)"
-            draggable="false"
-          />
+@if (showUi()) {
+  <div class="grid grid-cols-2 gap-3 p-20 pl-23 pr-23 pt-24">
+    <section class="h-185 flex flex-col justify-between">
+      <!--Buscador-->
+      <div class="relative flex items-center justify-center mt-5">
+        <img
+          src="assets/img/icons/bar-1.png"
+          class="absolute inset-0 object-fill pixelated -z-10 select-none pointer-events-none h-10 w-full"
+          draggable="false"
+          alt="bar"
+        />
+        <div class="mt-2 flex flex-row justify-between w-[90%]">
+          <div class="flex flex-row gap-4">
+            <img src="assets/img/icons/search.png" alt="Lupa" />
+            <input type="text" name="" id="" placeholder="Buscar" />
+          </div>
+          <img src="assets/img/icons/search-2.png" alt="Lupa" />
         </div>
-      }
-    </div>
-
-    <!-- Paginacion -->
-    <div class="relative flex items-center justify-center">
-      <img
-        src="assets/img/icons/bar-1.png"
-        class="absolute inset-0 object-fill pixelated -z-10 select-none pointer-events-none h-10 w-full"
-        draggable="false"
-        alt="bar"
-      />
-      <div class="flex items-center justify-center gap-2 mt-1">
-        <!-- Anterior -->
-        <button (click)="previousPage()" [disabled]="currentPage === 1" class="pagination-button">
-          <img src="assets/img/icons/row.png" alt="" class="pixelated rotate-180" />
-        </button>
-
-        <!-- Numeros -->
-        @for (page of pageNumbers; track page) {
-          @if (page === -1) {
-            <span class="px-2 text-white">…</span>
-          } @else {
-            <button (click)="goToPage(page)" class="pagination-button">
-              {{ page }}
-            </button>
-          }
-        }
-
-        <!-- Siguiente -->
-        <button
-          (click)="nextPage()"
-          [disabled]="currentPage === totalPages"
-          class="pagination-button"
-        >
-          <img src="assets/img/icons/row.png" alt="" class="pixelated" />
-        </button>
       </div>
-    </div>
-  </section>
+      <!-- lista -->
+      <div class="grid grid-cols-7 mb-1 gap-2">
+        @for (item of currentPokemons; track item.name) {
+          <div class="relative flex items-center justify-center group">
+            <!-- Caja -->
+            <img
+              src="assets/img/icons/box-pokemon.png"
+              alt="box"
+              class="pixelated select-none cursor-pointer"
+              draggable="false"
+            />
 
-  <!-- panel informativo -->
-  <section></section>
-</div>
+            <!-- Sprite -->
+            <img
+              class="absolute pixelated pointer-events-none"
+              [src]="
+                'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' +
+                getPokemonId(item.url) +
+                '.png'
+              "
+              [alt]="item.name"
+              (error)="onImageError($event)"
+              draggable="false"
+            />
+            <div
+              class="group-hover:opacity-70 absolute opacity-0 bg-black w-[80%] m-auto h-full cursor-pointer"
+            >
+              <span class="text-[0.6rem] text-white">
+                {{ item.name }}
+              </span>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Paginacion -->
+      <div class="relative flex items-center justify-center">
+        <img
+          src="assets/img/icons/bar-1.png"
+          class="absolute inset-0 object-fill pixelated -z-10 select-none pointer-events-none h-10 w-full"
+          draggable="false"
+          alt="bar"
+        />
+        <div class="flex items-center justify-center gap-2 mt-1">
+          <!-- Anterior -->
+          <button (click)="previousPage()" [disabled]="currentPage === 1" class="pagination-button">
+            <img
+              src="assets/img/icons/row.png"
+              alt=""
+              class="pixelated rotate-180 cursor-pointer"
+            />
+          </button>
+
+          <!-- Numeros -->
+          @for (page of pageNumbers; track page) {
+            @if (page === -1) {
+              <span class="px-2 text-white">…</span>
+            } @else {
+              <button
+                (click)="goToPage(page)"
+                class="cursor-pointer"
+                [style]="page === currentPage ? 'color: white;' : 'color: black;'"
+              >
+                {{ page }}
+              </button>
+            }
+          }
+
+          <!-- Siguiente -->
+          <button
+            (click)="nextPage()"
+            [disabled]="currentPage === totalPages"
+            class="pagination-button"
+          >
+            <img src="assets/img/icons/row.png" alt="" class="pixelated cursor-pointer" />
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- panel informativo -->
+    <app-pokemon-info-component></app-pokemon-info-component>
+  </div>
+}

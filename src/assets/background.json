@@ -11,12 +11,13 @@
     "spriteScale": 1,
     "canvasScale": 1,
     "totalScale": 1,
-    "img": "assets/img/background.png",
+    "img": "assets/img/default.png",
     "color": null,
     "alpha": 100,
     "currentAnimation": "home",
+    "defaultAnimation": "home",
     "currentFrame": 0,
-    "frameSpeed": 80,
+    "frameSpeed": 70,
     "frameCounter": 0,
     "zIndex": 0,
     "rotation": null,
@@ -34,6 +35,13 @@
         "frameHeight": 900,
         "description": "",
         "animationType": "loop"
+      },
+      "pokedex-init": {
+        "src": "assets/animations/background/pokedex-init.png",
+        "frameWidth": 1600,
+        "frameHeight": 900,
+        "description": "",
+        "animationType": "once"
       }
     }
   }
