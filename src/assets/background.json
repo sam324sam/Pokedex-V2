@@ -17,7 +17,7 @@
     "currentAnimation": "home",
     "defaultAnimation": "home",
     "currentFrame": 0,
-    "frameSpeed": 70,
+    "frameSpeed": 100,
     "frameCounter": 0,
     "zIndex": 0,
     "rotation": null,
