@@ -30,7 +30,7 @@ export class PokemonInfoComponent implements OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['pokemonNameSelect']?.currentValue) {
-      this.isLoading.set(true)
+      this.isLoading.set(true);
       this.pokemonSubscription?.unsubscribe();
 
       this.pokemonInfo = null;
@@ -41,6 +41,7 @@ export class PokemonInfoComponent implements OnChanges, OnDestroy {
         this.isLoading.set(false);
         this.pokemonService.getPokemonSpecie(pokemon.species.name).subscribe((species) => {
           this.pokemonSpecies = species;
+          console.log(this.pokemonInfo);
           // Esto siempre lo arregla
           setTimeout(() => {
             this.cdr.detectChanges();
@@ -58,6 +59,14 @@ export class PokemonInfoComponent implements OnChanges, OnDestroy {
   onImageError(event: Event): void {
     const img = event.target as HTMLImageElement;
     img.src = 'assets/img/icons/not-found-96.png';
+  }
+
+  get backGroundImg(): string {
+    if (this.pokemonInfo?.types.length == 2) {
+      return 'assets/img/icons/box-info-pokemon-double.png';
+    } else {
+      return 'assets/img/icons/box-info-pokemon.png';
+    }
   }
 
   get description(): string {

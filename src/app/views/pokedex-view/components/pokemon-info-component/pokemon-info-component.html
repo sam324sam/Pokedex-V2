@@ -1,6 +1,6 @@
 <section class="h-185 flex flex-col justify-between">
   @if (isLoading()) {
-    <img src="assets/img/icons/loading.gif" alt="cargando" class=" w-60 m-auto" />
+    <img src="assets/img/icons/loading.gif" alt="cargando" class="w-60 m-auto" />
   } @else if (pokemonInfo) {
     <div class="relative flex items-center justify-center mt-5">
       <img
@@ -22,10 +22,15 @@
 
     <div class="relative flex justify-between m-auto mt-5 flex-col w-full">
       <img
-        src="assets/img/icons/box-info-pokemon.png"
+        [src]="backGroundImg"
         alt="box"
         class="absolute inset-0 object-fill pixelated -z-10 select-none pointer-events-none w-[94%] m-auto mt-0 h-88"
       />
+      <div class="absolute flex flex-row ml-10 mt-3">
+        @for (item of pokemonInfo.types; track $index) {
+          <img [src]="'assets/img/icons/types/' + item.type.name + '.png'" alt="tipo" class="pixelated h-20 w-20 " />
+        }
+      </div>
       <img
         class="pixelated pointer-events-none w-70 m-auto mt-15"
         [src]="
