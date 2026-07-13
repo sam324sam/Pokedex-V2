@@ -1,11 +1,11 @@
 @if (showUi()) {
-  <div class="grid grid-cols-2 gap-3 p-20 pl-23 pr-23 pt-24">
+  <div class="grid grid-cols-2 gap-5 p-20 pl-25 pr-25 pt-24">
     <!--Lista-->
     <app-pokemon-list-component
       [pokemonList]="pokemonList"
-      (selectPokemon)="selectPokemon($event)">
-
+      (selectPokemon)="selectPokemon($event)"
     >
+      >
     </app-pokemon-list-component>
 
     <!-- panel informativo -->

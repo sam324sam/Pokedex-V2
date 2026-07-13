@@ -1,3 +1,53 @@
-<section>
-    {{pokemonNameSelect}}
+<section class="h-185 flex flex-col justify-between">
+  @if (isLoading()) {
+    <img src="assets/img/icons/loading.gif" alt="cargando" class=" w-60 m-auto" />
+  } @else if (pokemonInfo) {
+    <div class="relative flex items-center justify-center mt-5">
+      <img
+        src="assets/img/icons/bar-2.png"
+        class="absolute inset-0 object-fill pixelated -z-10 select-none pointer-events-none h-9 w-full"
+        draggable="false"
+        alt="bar"
+      />
+      <div class="mt-2 flex flex-row justify-start w-[90%]">
+        <div class="flex flex-row gap-4 text-white justify-center align-middle">
+          <img src="assets/img/icons/n-pokemon.png" alt="Numero" />
+          {{ pokemonInfo.id }}
+        </div>
+        <span class="ml-25">
+          {{ pokemonInfo.name.toUpperCase() }}
+        </span>
+      </div>
+    </div>
+
+    <div class="relative flex justify-between m-auto mt-5 flex-col w-full">
+      <img
+        src="assets/img/icons/box-info-pokemon.png"
+        alt="box"
+        class="absolute inset-0 object-fill pixelated -z-10 select-none pointer-events-none w-[94%] m-auto mt-0 h-88"
+      />
+      <img
+        class="pixelated pointer-events-none w-70 m-auto mt-15"
+        [src]="
+          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' +
+          pokemonInfo.id +
+          '.png'
+        "
+        [alt]="pokemonInfo.name"
+        (error)="onImageError($event)"
+        draggable="false"
+      />
+      <div>
+        <img
+          src="assets/img/icons/box-descripcion.png"
+          alt="box"
+          class="absolute inset-0 object-fill pixelated -z-10 select-none pointer-events-none w-[94%] m-auto mt-90 h-60"
+        />
+        <span class="-mt-2 absolute p-10 text-white"> Entrada </span>
+        <span class="mt-13 absolute p-11">
+          {{ description }}
+        </span>
+      </div>
+    </div>
+  }
 </section>

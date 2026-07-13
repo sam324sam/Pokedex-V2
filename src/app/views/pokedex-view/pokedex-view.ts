@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { PokemonService } from '../../services/pokemon/pokemon.service';
 import { AnimationService } from '../../services/animation.service';
 import { PokemonInfoComponent } from './components/pokemon-info-component/pokemon-info-component';
-import { PokemonListComponent } from "./components/pokemon-list-component/pokemon-list-component";
+import { PokemonListComponent } from './components/pokemon-list-component/pokemon-list-component';
+import { PokemonListItem } from '../../models/pokemon/pokemon-list.model';
 
 @Component({
   selector: 'app-pokedex-view',
@@ -14,7 +15,7 @@ import { PokemonListComponent } from "./components/pokemon-list-component/pokemo
 })
 export class PokedexView implements OnInit {
   pokemonNameSelect = signal('');
-  pokemonList: any[] = [];
+  pokemonList: PokemonListItem[] = [];
   showUi = signal(false);
   constructor(
     private readonly backgroundService: BackgroundService,
@@ -26,6 +27,7 @@ export class PokedexView implements OnInit {
   ngOnInit(): void {
     this.apiService.getAllListPokemon().subscribe((response) => {
       this.pokemonList = response.results;
+      this.loadImg()
     });
 
     let route = this.router.routerState.root;
@@ -33,9 +35,8 @@ export class PokedexView implements OnInit {
     while (route.firstChild) {
       route = route.firstChild;
     }
-    this.backgroundService.fadeIn();
     const background = route.snapshot.data['background'];
-    
+    this.backgroundService.fadeIn();
     this.backgroundService.changeAnimation(background);
 
     if (
@@ -58,7 +59,21 @@ export class PokedexView implements OnInit {
     this.backgroundService.changeView('pokedex');
   }
 
-  selectPokemon(name: string){
+  selectPokemon(name: string) {
     this.pokemonNameSelect.set(name);
+  }
+
+  getPokemonId(url: string): number {
+    return Number(url.split('/').filter(Boolean).pop());
+  }
+
+  loadImg() {
+    for (const item of this.pokemonList) {
+      const img = new Image();
+      img.src =
+        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' +
+        this.getPokemonId(item.url) +
+        '.png';
+    }
   }
 }
