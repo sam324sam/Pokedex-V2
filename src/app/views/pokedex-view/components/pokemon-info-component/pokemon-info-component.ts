@@ -10,6 +10,7 @@ import {
 import { PokemonService } from '../../../../services/pokemon/pokemon.service';
 import { Pokemon, PokemonSpecies } from '../../../../models/pokemon/pokemon.model';
 import { Subscription } from 'rxjs';
+import { SoundService } from '../../../../services/sound.service';
 @Component({
   selector: 'app-pokemon-info-component',
   imports: [],
@@ -21,9 +22,11 @@ export class PokemonInfoComponent implements OnChanges, OnDestroy {
   pokemonInfo: Pokemon | null = null;
   pokemonSpecies: PokemonSpecies | null = null;
   isLoading = signal(false);
+  shiny = signal(false);
   constructor(
     private readonly pokemonService: PokemonService,
     private readonly cdr: ChangeDetectorRef,
+    private readonly soundService: SoundService,
   ) {}
 
   private readonly pokemonSubscription?: Subscription;
@@ -50,6 +53,11 @@ export class PokemonInfoComponent implements OnChanges, OnDestroy {
         });
       });
     }
+  }
+
+  viewShiny() {
+    this.shiny.set(!this.shiny());
+    this.soundService.playEfects('select');
   }
 
   ngOnDestroy(): void {

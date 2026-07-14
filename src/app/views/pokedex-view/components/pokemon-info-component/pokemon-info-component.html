@@ -26,30 +26,59 @@
         alt="box"
         class="absolute inset-0 object-fill pixelated -z-10 select-none pointer-events-none w-[94%] m-auto mt-0 h-88"
       />
+
+      <button class="cursor-pointer" (click)="viewShiny()">
+        <img
+          src="assets/img/icons/shiny.png"
+          alt="shiny"
+          class="absolute flex h-10 w-10 flex-row ml-153 mt-15 pixelated"
+        />
+      </button>
+
       <div class="absolute flex flex-row ml-10 mt-3">
         @for (item of pokemonInfo.types; track $index) {
-          <img [src]="'assets/img/icons/types/' + item.type.name + '.png'" alt="tipo" class="pixelated h-20 w-20 " />
+          <img
+            [src]="'assets/img/icons/types/' + item.type.name + '.png'"
+            alt="tipo"
+            class="pixelated h-20 w-20"
+          />
         }
       </div>
-      <img
-        class="pixelated pointer-events-none w-70 m-auto mt-15"
-        [src]="
-          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' +
-          pokemonInfo.id +
-          '.png'
-        "
-        [alt]="pokemonInfo.name"
-        (error)="onImageError($event)"
-        draggable="false"
-      />
-      <div>
+
+      @if (shiny()) {
+        <img
+          class="pixelated pointer-events-none w-70 m-auto mt-15"
+          [src]="
+            'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/' +
+            pokemonInfo.id +
+            '.png'
+          "
+          [alt]="pokemonInfo.name"
+          (error)="onImageError($event)"
+          draggable="false"
+        />
+      } @else {
+        <img
+          class="pixelated pointer-events-none w-70 m-auto mt-15"
+          [src]="
+            'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' +
+            pokemonInfo.id +
+            '.png'
+          "
+          [alt]="pokemonInfo.name"
+          (error)="onImageError($event)"
+          draggable="false"
+        />
+      }
+
+      <div class="absolute w-full m-auto mt-90 h-60">
         <img
           src="assets/img/icons/box-descripcion.png"
           alt="box"
-          class="absolute inset-0 object-fill pixelated -z-10 select-none pointer-events-none w-[94%] m-auto mt-90 h-60"
+          class="absolute inset-0 object-fill pixelated -z-10 select-none pointer-events-none w-[94%] m-auto"
         />
-        <span class="-mt-2 absolute p-10 text-white"> Entrada </span>
-        <span class="mt-13 absolute p-11">
+        <span class="-mt-5 absolute p-10 text-white"> Entrada </span>
+        <span class="mt-5 absolute p-11">
           {{ description }}
         </span>
       </div>
