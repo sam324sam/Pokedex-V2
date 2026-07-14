@@ -1,0 +1,12 @@
+[
+  {
+    "name": "select",
+    "src": "assets/audio/select.wav",
+    "creditos": "https://github.com/pagefaultgames/pokerogue-assets/tree/96c1c4dee7ce76632dcfd47b55ff92c3f1872eee/audio/ui"
+  },
+  {
+    "name": "search-bar",
+    "src": "assets/audio/search-bar.wav",
+    "creditos": "https://github.com/pagefaultgames/pokerogue-assets/tree/96c1c4dee7ce76632dcfd47b55ff92c3f1872eee/audio/ui"
+  }
+]

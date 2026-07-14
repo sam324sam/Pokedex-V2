@@ -13,6 +13,7 @@ import { GameLoopService } from './services/game-loop.service';
 import { SpriteService } from './services/sprites.service';
 import { BackgroundService } from './services/background.service';
 import { DataService } from './services/data.service';
+import { SoundService } from './services/sound.service';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet],
@@ -30,6 +31,7 @@ export class App implements OnDestroy, OnInit {
     private readonly spriteService: SpriteService,
     readonly backgroundService: BackgroundService,
     readonly dataService: DataService,
+    readonly soundService: SoundService,
   ) {}
 
   ngOnDestroy() {
@@ -51,10 +53,19 @@ export class App implements OnDestroy, OnInit {
     this.scale = this.calculateScale();
   }
 
+  private initialized = false;
+
+  @HostListener('document:click')
+  onFirstClick() {
+    if (this.initialized) return;
+
+    this.initialized = true;
+    this.soundService.init();
+  }
+
   private async initialize(): Promise<void> {
     await this.dataService.loadAllAssets();
     this.scale = this.calculateScale();
-
     // Esperar al jodido else
     await new Promise((resolve) => setTimeout(resolve));
 

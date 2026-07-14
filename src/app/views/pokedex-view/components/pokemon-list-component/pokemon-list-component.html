@@ -12,6 +12,7 @@
         <img src="assets/img/icons/search.png" alt="Lupa" />
         <input
           [ngModel]="pokemonSearch()"
+          (click)="playEfectSearch()"
           (ngModelChange)="pokemonSearch.set($event)"
           placeholder="Buscar pokemon..."
           id=""

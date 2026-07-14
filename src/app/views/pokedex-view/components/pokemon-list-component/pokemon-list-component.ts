@@ -1,5 +1,6 @@
 import { Component, computed, effect, EventEmitter, input, Output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { SoundService } from '../../../../services/sound.service';
 
 @Component({
   selector: 'app-pokemon-list-component',
@@ -16,7 +17,7 @@ export class PokemonListComponent {
   currentPage = signal(1);
   itemsPerPage = 42;
 
-  constructor() {
+  constructor(private readonly soundService: SoundService) {
     effect(() => {
       this.pokemonSearch();
       this.currentPage.set(1);
@@ -51,7 +52,12 @@ export class PokemonListComponent {
     return Array.from({ length: end - start + 1 }, (_, i) => start + i);
   });
 
+  playEfectSearch() {
+    this.soundService.playEfects('search-bar', 0.4);
+  }
+
   sendSelectPokemon(name: string) {
+    this.soundService.playEfects('select');
     this.selectPokemon.emit(name);
   }
 
@@ -66,22 +72,21 @@ export class PokemonListComponent {
 
   nextPage(): void {
     if (this.currentPage() < this.totalPages()) {
+      this.soundService.playEfects('select');
       this.currentPage.update((p) => p + 1);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }
 
   previousPage(): void {
     if (this.currentPage() > 1) {
+      this.soundService.playEfects('select');
       this.currentPage.update((p) => p - 1);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }
 
   goToPage(page: number): void {
     if (page < 1 || page > this.totalPages()) return;
-
+    this.soundService.playEfects('select');
     this.currentPage.set(page);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }

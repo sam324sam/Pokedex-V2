@@ -6,11 +6,11 @@ export const routes: Routes = [
     {
         path: '',
         component: HomeView,
-        data: { background: 'home' }
+        data: { background: 'home', music: 'home' }
     },
     {
         path: 'pokedex',
         component: PokedexView,
-        data: { background: 'pokedex-init' }
+        data: { background: 'pokedex-init' , music: 'pokedex' }
     }
 ];

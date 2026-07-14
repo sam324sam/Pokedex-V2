@@ -1,10 +1,10 @@
 import { Injectable, signal } from '@angular/core';
 import { Entity } from '../models/entity/entity.model';
-
+import { AnimationFromJson, AnimationType } from '../models/sprites/animation-sprite.model';
 // Json
 import backgroundJson from '../../assets/background.json';
-import { AnimationFromJson, AnimationType } from '../models/sprites/animation-sprite.model';
-
+import musicJson from '../../assets/sound/music.json';
+import efectsJson from '../../assets/sound/efects.json';
 @Injectable({
   providedIn: 'root',
 })
@@ -12,9 +12,13 @@ export class DataService {
   background!: Entity;
   readonly isLoading = signal(true);
 
+  music: Map<string, string> = new Map();
+  efects: Map<string, string> = new Map();
+
   async loadAllAssets(): Promise<void> {
     try {
       this.background = await this.loadEntity(backgroundJson);
+      this.loadSound();
     } catch (error) {
       console.error(error);
     } finally {
@@ -22,6 +26,20 @@ export class DataService {
     }
   }
 
+  /**
+   * Cargar Sonido
+   */
+  loadSound() {
+    // Musica
+    for (const element of musicJson) {
+      this.music.set(element.name, element.src);
+    }
+
+    // Efectos
+    for (const element of efectsJson) {
+      this.efects.set(element.name, element.src);
+    }
+  }
   /**
    * Carga una entidad desde un json
    */
@@ -96,7 +114,20 @@ export class DataService {
         animationType: AnimationType[animation.animationType as keyof typeof AnimationType],
       };
     } catch (error) {
-      console.log(error, "en la animacion", name);
+      console.log(error, 'en la animacion', name);
     }
+  }
+  /**
+   * Devuelve el mapa de musica
+   */
+  getMusic(): Map<string, string> {
+    return this.music;
+  }
+
+  /**
+   * Devuelve el mapa de efectos
+   */
+  getEfects(): Map<string, string> {
+    return this.efects;
   }
 }
