@@ -25,21 +25,21 @@ export class PokemonListComponent {
   }
 
   // Aplicar el filtro por nombre
-  resultadosFiltrados = computed(() => {
-    const filtro = this.pokemonSearch().toLowerCase().trim();
-    const lista = this.pokemonList();
+  resulFilter = computed(() => {
+    const filter = this.pokemonSearch().toLowerCase().trim();
+    const list = this.pokemonList();
 
-    if (!filtro) return lista;
+    if (!filter) return list;
 
-    return lista.filter((item) => item.name.toLowerCase().includes(filtro));
+    return list.filter((item) => item.name.toLowerCase().includes(filter));
   });
 
   // aplicar la paginacion al filtrado
-  totalPages = computed(() => Math.ceil(this.resultadosFiltrados().length / this.itemsPerPage));
+  totalPages = computed(() => Math.ceil(this.resulFilter().length / this.itemsPerPage));
 
   currentPokemons = computed(() => {
     const start = (this.currentPage() - 1) * this.itemsPerPage;
-    return this.resultadosFiltrados().slice(start, start + this.itemsPerPage);
+    return this.resulFilter().slice(start, start + this.itemsPerPage);
   });
 
   pageNumbers = computed(() => {

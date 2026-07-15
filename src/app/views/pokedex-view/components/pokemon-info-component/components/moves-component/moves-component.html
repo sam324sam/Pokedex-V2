@@ -1,0 +1,58 @@
+<span class="title-data-pokedex flex flex-row justify-between w-full"
+  ><div class="flex flex-row gap-3">
+    <img src="assets/img/icons/search.png" alt="Lupa" />
+    <input
+      [ngModel]="moveSearch()"
+      (click)="playEfectSearch()"
+      (ngModelChange)="moveSearch.set($event)"
+      placeholder="Buscar Movimientos..."
+      id=""
+    />
+  </div>
+  Movimientos
+</span>
+@if (isLoading()) {
+  <img src="assets/img/icons/loading.gif" alt="cargando" class="w-40 mt-17 m-auto" />
+} @else {
+  <div class="grid grid-cols-2 gap-1 p-1 mt-15 w-[92%] h-49 m-auto">
+    <div class="w-full overflow-y-auto overflow-x-hidden grid grid-cols-2">
+      @for (item of resulFilter(); track $index) {
+        <button
+          class="flex items-center justify-center h-8 text-[0.6rem] bg-[#bdfeff] border border-[#3a96b6] text-center leading-none overflow-hidden cursor-pointer"
+          (click)="selectMove(item)"
+        >
+          {{ getSpanishName(item) }}
+        </button>
+      }
+    </div>
+    <!--Informacion-->
+    <div class="relative w-full">
+      <img
+        src="assets/img/icons/box-move-info.png"
+        alt="box"
+        class="absolute inset-0 w-full h-full object-fill pixelated pointer-events-none -z-10"
+      />
+
+      @if (move) {
+        <img
+          [src]="'assets/img/icons/types/' + move.type.name + '.png'"
+          [alt]="move.type.name"
+          class="absolute inset-0 w-[20%] h-[20%] ml-61.5 mt-1 object-fill pixelated pointer-events-none -z-10"
+        />
+        <div class="relative z-10 p-3 pb-1 text-[0.75rem] overflow-x-auto">
+          {{ getSpanishName(move) }}
+        </div>
+        <div class="relative z-10 p-3 text-[0.65rem] pr-17 overflow-y-auto">
+          {{ getSpanishDescription(move) }}
+        </div>
+        <div
+          class="absolute inset-0 w-[20%] h-[20%] ml-65 mt-12 object-fill pixelated -z-10 text-[0.7rem] flex flex-col"
+        >
+          <span>{{ move.pp }}</span>
+          <span>{{ move.power }}</span>
+          <span>{{ move.accuracy }}</span>
+        </div>
+      }
+    </div>
+  </div>
+}

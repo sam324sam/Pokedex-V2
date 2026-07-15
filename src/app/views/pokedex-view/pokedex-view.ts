@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, HostListener, OnInit, signal } from '@angular/core';
 import { BackgroundService } from '../../services/background.service';
 import { Router } from '@angular/router';
 import { PokemonService } from '../../services/pokemon/pokemon.service';
@@ -17,6 +17,8 @@ export class PokedexView implements OnInit {
   pokemonNameSelect = signal('');
   pokemonList: PokemonListItem[] = [];
   showUi = signal(false);
+  timeout: number = 0;
+  private skipAnimation = false;
   constructor(
     private readonly backgroundService: BackgroundService,
     private readonly router: Router,
@@ -27,7 +29,7 @@ export class PokedexView implements OnInit {
   ngOnInit(): void {
     this.apiService.getAllListPokemon().subscribe((response) => {
       this.pokemonList = response.results;
-      this.loadImg()
+      this.loadImg();
     });
 
     let route = this.router.routerState.root;
@@ -43,9 +45,10 @@ export class PokedexView implements OnInit {
       this.backgroundService.background.sprite.animationSprite[background].animationType == 'once'
     ) {
       this.backgroundService.background.sprite.defaultAnimation = 'pokedex';
-      setTimeout(
+      this.timeout = setTimeout(
         () => {
           this.showUi.set(true);
+          this.skipAnimation = true;
         },
         this.animationService.getAnimationDuration(
           this.backgroundService.background.sprite,
@@ -53,6 +56,15 @@ export class PokedexView implements OnInit {
         ),
       );
     }
+  }
+
+  @HostListener('document:click')
+  onFirstClick() {
+    if (this.skipAnimation) return;
+    clearTimeout(this.timeout);
+    this.skipAnimation = true;
+    this.backgroundService.changeAnimation('pokedex');
+    this.showUi.set(true);
   }
 
   changeView() {

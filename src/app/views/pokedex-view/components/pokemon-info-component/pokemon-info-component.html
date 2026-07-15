@@ -71,16 +71,57 @@
         />
       }
 
-      <div class="absolute w-full m-auto mt-90 h-60">
+      <div class="absolute w-full m-auto mt-90 h-65">
         <img
           src="assets/img/icons/box-descripcion.png"
           alt="box"
-          class="absolute inset-0 object-fill pixelated -z-10 select-none pointer-events-none w-[94%] m-auto"
+          class="absolute inset-0 object-fill pixelated -z-10 select-none pointer-events-none w-[94%] m-auto h-65"
         />
-        <span class="-mt-5 absolute p-10 text-white"> Entrada </span>
-        <span class="mt-5 absolute p-11">
-          {{ description }}
-        </span>
+        <div class="absolute w-full m-auto h-65">
+          @switch (currentDisplay()) {
+            @case ('description') {
+              <app-description-component [description]="description"> </app-description-component>
+            }
+
+            @case ('moves') {
+              <app-moves-component [movesPokemon]="pokemonInfo.moves"> </app-moves-component>
+            }
+
+            @case ('stats') {
+              <app-stats-component [stats]="pokemonInfo.stats"> </app-stats-component>
+            }
+
+            @case ('abilities') {
+              <app-abilities-component [abilities]="pokemonInfo.abilities">
+              </app-abilities-component>
+            }
+
+            @case ('evolution') {
+              <app-evolution-component>
+              </app-evolution-component>
+            }
+          }
+        </div>
+      </div>
+      <!--Botones-->
+      <div class="flex w-full mt-158 absolute">
+        <img
+          src="assets/img/icons/bar-1.png"
+          class="absolute inset-0 object-fill pixelated -z-10 select-none pointer-events-none h-9 w-full"
+          draggable="false"
+          alt="bar"
+        />
+        <div class="flex flex-row justify-around align-middle w-full p-1 ">
+          @for (button of buttons; track button.id) {
+            <button
+              (click)="changeDisplay(button.id)"
+              [class.active]="currentDisplay() === button.id"
+              class="cursor-pointer"
+            >
+              <img [src]="button.src" [alt]="button.text" class="w-7"/>
+            </button>
+          }
+        </div>
       </div>
     </div>
   }

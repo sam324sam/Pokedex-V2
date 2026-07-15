@@ -58,8 +58,7 @@ export class SoundService {
   }
 
   // ========== Efectos
-  playEfects(key: string, volume = 0.5): void {
-    const src = this.efects.get(key);
+  playEfects(key: string, volume = 0.5, src = this.efects.get(key)): void {
     if (!src) return;
 
     if (this.curretnEfect) {

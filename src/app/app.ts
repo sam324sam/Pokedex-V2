@@ -26,6 +26,7 @@ export class App implements OnDestroy, OnInit {
   private readonly canvasRef!: ElementRef<HTMLCanvasElement>;
   canvas!: HTMLCanvasElement;
   scale: number = 1;
+  private initialized = false;
   constructor(
     private readonly gameLoopService: GameLoopService,
     private readonly spriteService: SpriteService,
@@ -52,8 +53,6 @@ export class App implements OnDestroy, OnInit {
   onResize() {
     this.scale = this.calculateScale();
   }
-
-  private initialized = false;
 
   @HostListener('document:click')
   onFirstClick() {

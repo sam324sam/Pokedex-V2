@@ -42,3 +42,11 @@ html {
   font-family: 'PressStart2P', sans-serif;
   pointer-events: auto;
 }
+
+.title-data-pokedex {
+  margin: 1rem;
+  position: absolute;
+  color: white;
+  width: 90%;
+  margin-left: 2rem;
+}
