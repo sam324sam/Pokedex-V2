@@ -54,14 +54,14 @@ export class PokemonInfoComponent implements OnChanges, OnDestroy {
       src: 'assets/img/icons/buttons/moves.png',
     },
     {
-      id: 'abilities' as Display,
-      text: 'Habilidades',
-      src: 'assets/img/icons/buttons/abilities.png',
-    },
-    {
       id: 'stats' as Display,
       text: 'Estadisticas',
       src: 'assets/img/icons/buttons/stats.png',
+    },
+    {
+      id: 'abilities' as Display,
+      text: 'Habilidades',
+      src: 'assets/img/icons/buttons/abilities.png',
     },
     {
       id: 'evolution' as Display,

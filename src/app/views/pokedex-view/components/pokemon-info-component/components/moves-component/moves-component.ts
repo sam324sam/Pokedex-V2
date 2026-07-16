@@ -1,4 +1,4 @@
-import { Component, computed, Input, OnInit, Signal, signal } from '@angular/core';
+import { Component, computed, Input, OnInit, signal } from '@angular/core';
 import { MovePokemon } from '../../../../../../models/pokemon/pokemon.model';
 import { MoveService } from '../../../../../../services/pokemon/move.service';
 import { Move } from '../../../../../../models/pokemon/move.model';
@@ -29,7 +29,6 @@ export class MovesComponent implements OnInit {
     this.isLoading.set(true);
     this.moveService.getMovesData(this.movesPokemon).subscribe((moves) => {
       this.moves = moves;
-      console.log(this.moves);
       this.isLoading.set(false);
     });
   }

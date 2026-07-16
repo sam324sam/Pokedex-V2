@@ -1,1 +1,23 @@
-<span class="title-data-pokedex"> Habilidades </span>
+<span class="title-data-pokedex">Habilidades</span>
+
+@if (isLoading()) {
+  <img src="assets/img/icons/loading.gif" alt="cargando" class="w-40 mt-17 m-auto" />
+} @else {
+  <div class="  p-1 mt-15 w-[92%] h-49 m-auto">
+    <div class="w-full h-full overflow-y-auto overflow-x-hidden grid grid-cols-2 gap-1">
+      @for (ability of abilities; track ability.id) {
+        <div class="">
+          <div class="">
+            <span class="">
+              {{ getSpanishName(ability) }}
+            </span>
+          </div>
+
+          <p class="">
+            {{ getSpanishDescription(ability) }}
+          </p>
+        </div>
+      }
+    </div>
+  </div>
+}

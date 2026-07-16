@@ -4,7 +4,7 @@
 <div class="mt-15 w-[92%] h-43 m-auto overflow-y-auto px-2 grid grid-cols-2 gap-2">
   @for (stat of stats; track stat.stat.name) {
     <div class="mb-2">
-      <div class="flex justify-between items-center text-[0.65rem] text-white mb-1">
+      <div class="flex justify-between items-center text-[0.65rem]  mb-1">
         <span>
           @switch (stat.stat.name) {
             @case ('hp') {
@@ -35,7 +35,11 @@
       </div>
 
       <div class="w-full h-3 bg-[#3d4b5d] border border-[#1d2734]">
-        <div class="h-full bg-[#84feff]" [style.width.%]="getBarWidth(stat.base_stat)"></div>
+        <div
+          [style.background-color]="calculateColor(stat.base_stat)"
+          class="h-full transition-all"
+          [style.width.%]="getBarWidth(stat.base_stat)"
+        ></div>
       </div>
     </div>
   }
