@@ -9,14 +9,18 @@
         draggable="false"
         alt="bar"
       />
-      <div class="mt-2 flex flex-row justify-start w-[90%]">
-        <div class="flex flex-row gap-4 text-white justify-center align-middle">
+
+      <div class="relative mt-2 flex items-center w-[90%]">
+        <div class="flex items-center gap-2 text-white shrink-0">
           <img src="assets/img/icons/n-pokemon.png" alt="Numero" />
           {{ pokemonInfo.id }}
         </div>
-        <span class="ml-25">
-          {{ pokemonInfo.name.toUpperCase() }}
-        </span>
+
+        <div class=" absolute ml-34 flex-1 overflow-x-auto overflow-y-hidden whitespace-nowrap w-full">
+          <span class=" w-full">
+            {{ pokemonInfo.name.toUpperCase() }}
+          </span>
+        </div>
       </div>
     </div>
 
@@ -45,31 +49,14 @@
         }
       </div>
 
-      @if (shiny()) {
+      <div class="flex justify-center items-center h-70 w-70 m-auto mt-15">
         <img
-          class="pixelated pointer-events-none w-70 m-auto mt-15"
-          [src]="
-            'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/' +
-            pokemonInfo.id +
-            '.png'
-          "
-          [alt]="pokemonInfo.name"
+          class="pixelated w-full h-full max-w-full max-h-full object-contain"
+          [src]="pokemonSprite"
           (error)="onImageError($event)"
-          draggable="false"
-        />
-      } @else {
-        <img
-          class="pixelated pointer-events-none w-70 m-auto mt-15"
-          [src]="
-            'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' +
-            pokemonInfo.id +
-            '.png'
-          "
           [alt]="pokemonInfo.name"
-          (error)="onImageError($event)"
-          draggable="false"
         />
-      }
+      </div>
 
       <div class="absolute w-full m-auto mt-90 h-65">
         <img
@@ -97,8 +84,7 @@
             }
 
             @case ('evolution') {
-              <app-evolution-component>
-              </app-evolution-component>
+              <app-evolution-component> </app-evolution-component>
             }
           }
         </div>
@@ -111,14 +97,14 @@
           draggable="false"
           alt="bar"
         />
-        <div class="flex flex-row justify-around align-middle w-full p-1 ">
+        <div class="flex flex-row justify-around align-middle w-full p-1">
           @for (button of buttons; track button.id) {
             <button
               (click)="changeDisplay(button.id)"
               [class.active]="currentDisplay() === button.id"
               class="cursor-pointer"
             >
-              <img [src]="button.src" [alt]="button.text" class="w-7"/>
+              <img [src]="button.src" [alt]="button.text" class="w-7" />
             </button>
           }
         </div>

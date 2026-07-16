@@ -1,4 +1,4 @@
-import { Component, computed, Input, OnInit, signal } from '@angular/core';
+import { Component, computed, Input, OnInit, Signal, signal } from '@angular/core';
 import { MovePokemon } from '../../../../../../models/pokemon/pokemon.model';
 import { MoveService } from '../../../../../../services/pokemon/move.service';
 import { Move } from '../../../../../../models/pokemon/move.model';
@@ -15,16 +15,21 @@ export class MovesComponent implements OnInit {
   @Input() movesPokemon: MovePokemon[] = [];
   isLoading = signal(false);
   moves: Move[] = [];
-  move: Move = {} as Move;
+  selectedMovePokemon: MovePokemon | null = null;
+  move: Move | null = null;
 
   moveSearch = signal('');
 
-  constructor(private readonly moveService: MoveService, private readonly soundService: SoundService) {}
+  constructor(
+    private readonly moveService: MoveService,
+    private readonly soundService: SoundService,
+  ) {}
 
   ngOnInit(): void {
     this.isLoading.set(true);
     this.moveService.getMovesData(this.movesPokemon).subscribe((moves) => {
       this.moves = moves;
+      console.log(this.moves);
       this.isLoading.set(false);
     });
   }
@@ -57,6 +62,51 @@ export class MovesComponent implements OnInit {
 
   selectMove(move: Move) {
     this.move = move;
-    this.soundService.playEfects('select')
+
+    this.selectedMovePokemon = this.movesPokemon.find((m) => m.move.name === move.name) ?? null;
+
+    this.soundService.playEfects('select');
+  }
+
+  onImageError(event: Event): void {
+    const img = event.target as HTMLImageElement;
+    img.src = 'assets/img/icons/not-found-96.png';
+  }
+
+  getMoveLearnMethodText(method: string): string {
+    switch (method) {
+      case 'level-up':
+        return 'Se aprende al subir de nivel';
+
+      case 'machine':
+        return 'Se aprende mediante una MT';
+
+      case 'tutor':
+        return 'Se aprende con un Tutor de movimientos';
+
+      case 'egg':
+        return 'Se obtiene como Movimiento Huevo';
+
+      case 'form-change':
+        return 'Se obtiene al cambiar de forma';
+
+      case 'light-ball-egg':
+        return 'Movimiento Huevo (requiere Bola Luminosa)';
+
+      case 'zygarde-cube':
+        return 'Se obtiene usando el Cubo Zygarde';
+
+      case 'colosseum-purification':
+        return 'Se obtiene al purificar un Pokémon';
+
+      case 'xd-shadow':
+        return 'Movimiento exclusivo de Pokémon XD';
+
+      case 'stadium-surfing-pikachu':
+        return 'Movimiento exclusivo de Pikachu Surf';
+
+      default:
+        return method;
+    }
   }
 }

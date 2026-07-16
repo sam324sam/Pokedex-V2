@@ -16,13 +16,13 @@ export interface Pokemon {
   stats: StatPokemon[];
 }
 
-export interface StatPokemon{
-  base_stat:number
-  effort: number
+export interface StatPokemon {
+  base_stat: number;
+  effort: number;
   stat: {
-    name: string
-    url: string
-  }
+    name: string;
+    url: string;
+  };
 }
 
 export interface AbilityPokemon {
@@ -35,11 +35,25 @@ export interface AbilityPokemon {
 }
 
 export interface MovePokemon {
-  slot: number;
   move: {
     name: string;
     url: string;
   };
+  version_group_details: VersionGroupDetail[];
+}
+
+export interface VersionGroupDetail {
+  level_learned_at: number;
+  move_learn_method: MoveLearnMethod;
+  version_group: VersionGroup;
+}
+
+export interface MoveLearnMethod {
+  name: string;
+}
+
+export interface VersionGroup {
+  name: string;
 }
 
 export interface TypePokemon {

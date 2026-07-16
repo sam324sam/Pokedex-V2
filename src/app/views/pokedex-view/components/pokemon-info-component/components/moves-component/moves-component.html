@@ -34,23 +34,79 @@
       />
 
       @if (move) {
-        <img
-          [src]="'assets/img/icons/types/' + move.type.name + '.png'"
-          [alt]="move.type.name"
-          class="absolute inset-0 w-[20%] h-[20%] ml-61.5 mt-1 object-fill pixelated pointer-events-none -z-10"
-        />
-        <div class="relative z-10 p-3 pb-1 text-[0.75rem] overflow-x-auto">
+        <div class="absolute ml-64.5 mt-2 flex flex-col gap-2 text-center">
+          <img
+            [src]="'assets/img/icons/types/' + move.type.name + '.png'"
+            [alt]="move.type.name"
+            [title]="move.type.name"
+            class="w-9 h-9 object-fill pixelated"
+          />
+
+          <img
+            [src]="'assets/img/icons/class-damage/' + move.damage_class.name + '.png'"
+            [alt]="move.damage_class.name"
+            class="w-9 h-6 object-fill pixelated"
+          />
+
+          @if (selectedMovePokemon) {
+            <img
+              [src]="
+                'assets/img/icons/learned-move/' +
+                selectedMovePokemon.version_group_details[0].move_learn_method.name +
+                '.png'
+              "
+              [title]="
+                getMoveLearnMethodText(
+                  selectedMovePokemon.version_group_details[0].move_learn_method.name
+                )
+              "
+              (error)="onImageError($event)"
+              [alt]="selectedMovePokemon.version_group_details[0].move_learn_method.name"
+              class="w-8 h-8 object-fill pixelated"
+            />
+
+            @if (
+              selectedMovePokemon.version_group_details[0].move_learn_method.name === 'level-up'
+            ) {
+              <span class="-mt-2 text-[0.75rem]">
+                {{ selectedMovePokemon.version_group_details[0].level_learned_at }}
+              </span>
+            }
+          }
+        </div>
+
+        <div class="relative z-10 p-3 pb-2 -mt-1 text-[0.75rem] overflow-x-auto text-white">
           {{ getSpanishName(move) }}
         </div>
-        <div class="relative z-10 p-3 text-[0.65rem] pr-17 overflow-y-auto">
+        <div class="relative z-10 p-3 pt-0 text-[0.65rem] mr-18 overflow-y-auto h-25">
           {{ getSpanishDescription(move) }}
         </div>
         <div
-          class="absolute inset-0 w-[20%] h-[20%] ml-65 mt-12 object-fill pixelated -z-10 text-[0.7rem] flex flex-col"
+          class="absolute grid grid-cols-3 inset-0 w-full h-[20%] mt-36 gap-3 object-fill pixelated -z-10 text-[0.7rem] align-middle text-center text-white"
         >
-          <span>{{ move.pp }}</span>
-          <span>{{ move.power }}</span>
-          <span>{{ move.accuracy }}</span>
+          <div class="stat-box">
+            <img
+              src="assets/img/icons/PP.png"
+              class="inset-0 object-fill pixelated -z-10"
+              alt="PP"
+            />
+            {{ move.pp }}
+          </div>
+          <div class="stat-box">
+            <img
+              src="assets/img/icons/power.png"
+              class="inset-0 object-fill pixelated -z-10"
+              alt="power"
+            />
+            {{ move.power ?? 'X' }}
+          </div>
+          <div class="stat-box">
+            <img
+              src="assets/img/icons/accuracy.png"
+              class="inset-0 object-fill pixelated -z-10"
+              alt="accuracy"
+            />{{ move.accuracy ?? 'X' }}
+          </div>
         </div>
       }
     </div>

@@ -21,7 +21,13 @@ type Display = 'description' | 'moves' | 'stats' | 'abilities' | 'evolution';
 
 @Component({
   selector: 'app-pokemon-info-component',
-  imports: [DescriptionComponent, MovesComponent, AbilitiesComponent, StatsComponent, EvolutionComponent],
+  imports: [
+    DescriptionComponent,
+    MovesComponent,
+    AbilitiesComponent,
+    StatsComponent,
+    EvolutionComponent,
+  ],
   templateUrl: './pokemon-info-component.html',
   styleUrl: './pokemon-info-component.css',
 })
@@ -33,6 +39,8 @@ export class PokemonInfoComponent implements OnChanges, OnDestroy {
   shiny = signal(false);
   // Apartado para los botones
   currentDisplay = signal<Display>('description');
+  private readonly defaultSprite =
+    'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/';
 
   buttons = [
     {
@@ -105,7 +113,19 @@ export class PokemonInfoComponent implements OnChanges, OnDestroy {
 
   onImageError(event: Event): void {
     const img = event.target as HTMLImageElement;
-    img.src = 'assets/img/icons/not-found-96.png';
+
+    if (!this.pokemonInfo) {
+      img.src = 'assets/img/icons/not-found-96.png';
+      return;
+    }
+
+    if (img.src.endsWith('.gif')) {
+      img.src = this.shiny()
+        ? `${this.defaultSprite}shiny/${this.pokemonInfo.id}.png`
+        : `${this.defaultSprite}${this.pokemonInfo.id}.png`;
+    } else {
+      img.src = 'assets/img/icons/not-found-96.png';
+    }
   }
 
   changeDisplay(display: Display) {
@@ -127,5 +147,19 @@ export class PokemonInfoComponent implements OnChanges, OnDestroy {
     const entry = this.pokemonSpecies.flavor_text_entries.find((e) => e.language.name === 'es');
 
     return entry?.flavor_text.replaceAll('\n', ' ').replaceAll('\f', ' ') ?? '';
+  }
+
+  get pokemonSprite(): string {
+    if (!this.pokemonInfo) {
+      return '';
+    }
+
+    const id = this.pokemonInfo.id;
+
+    if (this.shiny()) {
+      return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/shiny/${id}.gif`;
+    }
+
+    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${id}.gif`;
   }
 }

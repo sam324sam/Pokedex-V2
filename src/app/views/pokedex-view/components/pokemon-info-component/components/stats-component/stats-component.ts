@@ -9,4 +9,7 @@ import { StatPokemon } from '../../../../../../models/pokemon/pokemon.model';
 })
 export class StatsComponent {
   @Input() stats: StatPokemon[] = [];
+  getBarWidth(value: number): number {
+    return Math.min((value / 255) * 100, 100);
+  }
 }
