@@ -26,7 +26,6 @@ export class AbilitiesComponent implements OnInit {
     console.log(this.abilitiesPokemon);
     this.abilitiesService.getAbilityData(this.abilitiesPokemon).subscribe((abilities) => {
       this.abilities = abilities;
-      console.log(this.abilities);
       this.isLoading.set(false);
     });
   }

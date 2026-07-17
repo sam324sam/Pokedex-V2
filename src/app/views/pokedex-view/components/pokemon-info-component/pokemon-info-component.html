@@ -88,7 +88,7 @@
             }
 
             @case ('combat') {
-              <app-combat-component> </app-combat-component>
+              <app-combat-component [typesPokemon]="pokemonInfo.types"> </app-combat-component>
             }
           }
         </div>

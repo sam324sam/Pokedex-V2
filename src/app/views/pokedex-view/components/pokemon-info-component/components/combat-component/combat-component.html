@@ -1,1 +1,61 @@
 <span class="title-data-pokedex">En combate</span>
+@if (isLoading()) {
+  <img src="assets/img/icons/loading.gif" alt="cargando" class="w-40 mt-17 m-auto pixelated" />
+} @else {
+  <div class="mt-15 w-[92%] h-49 m-auto flex flex-col items-center gap-2">
+    <div class="flex flex-row">
+      <h3>Super débil (x4)</h3>
+      @for (item of getSuperWeak(); track item.name) {
+        <img
+          [src]="'assets/img/icons/types/' + item.name + '.png'"
+          class="pixelated h-10 w-10"
+          [alt]="item.name"
+        />
+      }
+    </div>
+
+    <div class="flex flex-row">
+      <h3>Débil (x2)</h3>
+      @for (item of getWeak(); track item.name) {
+        <img
+          [src]="'assets/img/icons/types/' + item.name + '.png'"
+          class="pixelated h-10 w-10"
+          [alt]="item.name"
+        />
+      }
+    </div>
+
+    <div class="flex flex-row">
+      <h3>Resistente (x0.5)</h3>
+      @for (item of getResistant(); track item.name) {
+        <img
+          [src]="'assets/img/icons/types/' + item.name + '.png'"
+          class="pixelated h-10 w-10"
+          [alt]="item.name"
+        />
+      }
+    </div>
+
+    <div class="flex flex-row">
+      <h3>Muy resistente (x0.25)</h3>
+      @for (item of getSuperResistant(); track item.name) {
+        <img
+          [src]="'assets/img/icons/types/' + item.name + '.png'"
+          class="pixelated h-10 w-10"
+          [alt]="item.name"
+        />
+      }
+    </div>
+
+    <div class="flex flex-row">
+      <h3>Inmune (x0)</h3>
+      @for (item of getImmune(); track item.name) {
+        <img
+          [src]="'assets/img/icons/types/' + item.name + '.png'"
+          class="pixelated h-10 w-10"
+          [alt]="item.name"
+        />
+      }
+    </div>
+  </div>
+}
