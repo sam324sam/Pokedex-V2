@@ -1,23 +1,46 @@
 <span class="title-data-pokedex">Habilidades</span>
 
 @if (isLoading()) {
-  <img src="assets/img/icons/loading.gif" alt="cargando" class="w-40 mt-17 m-auto" />
+  <img src="assets/img/icons/loading.gif" alt="cargando" class="w-40 mt-17 m-auto pixelated" />
 } @else {
-  <div class="  p-1 mt-15 w-[92%] h-49 m-auto">
-    <div class="w-full h-full overflow-y-auto overflow-x-hidden grid grid-cols-2 gap-1">
-      @for (ability of abilities; track ability.id) {
-        <div class="">
-          <div class="">
-            <span class="">
-              {{ getSpanishName(ability) }}
-            </span>
-          </div>
+  <div class="mt-15 w-[92%] h-49 m-auto flex items-center gap-2">
+    <button
+      (click)="previousAbility()"
+      class="flex h-full items-center justify-center cursor-pointer"
+    >
+      <img
+        src="assets/img/icons/abilities/button.png"
+        class="rotate-180 ml-3 -mt-2 h-[95%]"
+        alt=""
+      />
+    </button>
 
-          <p class="">
-            {{ getSpanishDescription(ability) }}
-          </p>
-        </div>
+    <div class="flex-1 h-full overflow-hidden relative">
+      <img
+        class="absolute -z-10 w-full h-47 pixelated"
+        src="assets/img/icons/abilities/box-abilities-info.png"
+        alt="box"
+      />
+      <span class="font-bold text-center block mb-2 mt-3 text-white">
+        {{ getSpanishName(currentAbility()) }}
+      </span>
+
+      <p class="text-sm text-center mt-3 p-1">
+        {{ getSpanishDescription(currentAbility()) }}
+      </p>
+    </div>
+
+    <div class="flex justify-center gap-2 w-[92%] mt-38 absolute">
+      @for (ability of abilities; track ability.id; let i = $index) {
+        <span
+          class="w-2 h-2 rounded-full"
+          [style.background-color]="i === currentAbilityIndex ? '#84feff' : '#ffffff'"
+        ></span>
       }
     </div>
+
+    <button (click)="nextAbility()" class="flex h-full items-center justify-center cursor-pointer">
+      <img src="assets/img/icons/abilities/button.png" class="mr-3 -mt-2 h-[95%]" alt="" />
+    </button>
   </div>
 }

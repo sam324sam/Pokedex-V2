@@ -1,45 +1,28 @@
 <span class="title-data-pokedex"> Estadisticas </span>
-<span class="title-data-pokedex">Estadísticas</span>
 
-<div class="mt-15 w-[92%] h-43 m-auto overflow-y-auto px-2 grid grid-cols-2 gap-2">
+<div class="mt-17 w-[92%] h-43 m-auto overflow-y-auto px-2 grid grid-cols-2 gap-2">
   @for (stat of stats; track stat.stat.name) {
-    <div class="mb-2">
-      <div class="flex justify-between items-center text-[0.65rem]  mb-1">
-        <span>
-          @switch (stat.stat.name) {
-            @case ('hp') {
-              PS
-            }
-            @case ('attack') {
-              Ataque
-            }
-            @case ('defense') {
-              Defensa
-            }
-            @case ('special-attack') {
-              At. Esp.
-            }
-            @case ('special-defense') {
-              Def. Esp.
-            }
-            @case ('speed') {
-              Velocidad
-            }
-            @default {
-              {{ stat.stat.name }}
-            }
-          }
+    <div class="flex items-center gap-2 relative">
+      <img
+        [src]="'assets/img/icons/stats/' + stat.stat.name + '.png'"
+        [alt]="stat.stat.name"
+        class="absolute inset-0 w-full h-full object-contain pixelated pointer-events-none"
+      />
 
-          <span>{{ stat.base_stat }}</span></span
-        >
-      </div>
-
-      <div class="w-full h-3 bg-[#3d4b5d] border border-[#1d2734]">
+      <div class="flex-1 h-5 ml-32 mr-2 relative">
         <div
-          [style.background-color]="calculateColor(stat.base_stat)"
-          class="h-full transition-all"
-          [style.width.%]="getBarWidth(stat.base_stat)"
-        ></div>
+          class="absolute inset-0 flex items-center justify-center font-bold text-xs z-10"
+          [style.color]="getStatTextColor(stat.base_stat)"
+        >
+          {{ stat.base_stat }}
+        </div>
+        <div class="flex-1 h-full">
+          <div
+            [style.background-color]="calculateColor(stat.base_stat)"
+            class="h-full transition-all"
+            [style.width.%]="getBarWidth(stat.base_stat)"
+          ></div>
+        </div>
       </div>
     </div>
   }

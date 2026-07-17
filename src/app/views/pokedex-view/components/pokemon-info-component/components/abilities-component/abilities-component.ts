@@ -2,6 +2,7 @@ import { Component, Input, OnInit, signal } from '@angular/core';
 import { AbilityPokemon } from '../../../../../../models/pokemon/pokemon.model';
 import { Ability } from '../../../../../../models/pokemon/ability.model';
 import { AbilitiesService } from '../../../../../../services/pokemon/abilities.service';
+import { SoundService } from '../../../../../../services/sound.service';
 
 @Component({
   selector: 'app-abilities-component',
@@ -14,8 +15,11 @@ export class AbilitiesComponent implements OnInit {
 
   isLoading = signal(false);
   abilities: Ability[] = [];
-
-  constructor(private readonly abilitiesService: AbilitiesService) {}
+  currentAbilityIndex = 0;
+  constructor(
+    private readonly abilitiesService: AbilitiesService,
+    private readonly soundService: SoundService,
+  ) {}
 
   ngOnInit(): void {
     this.isLoading.set(true);
@@ -37,5 +41,19 @@ export class AbilitiesComponent implements OnInit {
         .find((f) => f.language.name === 'es')
         ?.flavor_text.replace(/[\n\f]/g, ' ') ?? ''
     );
+  }
+
+  currentAbility() {
+    return this.abilities[this.currentAbilityIndex];
+  }
+
+  nextAbility() {
+    this.currentAbilityIndex = (this.currentAbilityIndex + 1) % this.abilities.length;
+    this.soundService.playEfects('select');
+  }
+
+  previousAbility() {
+    this.currentAbilityIndex = (this.currentAbilityIndex - 1 + this.abilities.length) % this.abilities.length;
+    this.soundService.playEfects('select');
   }
 }

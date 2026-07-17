@@ -16,8 +16,9 @@ import { MovesComponent } from './components/moves-component/moves-component';
 import { AbilitiesComponent } from './components/abilities-component/abilities-component';
 import { StatsComponent } from './components/stats-component/stats-component';
 import { EvolutionComponent } from './components/evolution-component/evolution-component';
+import { CombatComponent } from './components/combat-component/combat-component';
 
-type Display = 'description' | 'moves' | 'stats' | 'abilities' | 'evolution';
+type Display = 'description' | 'moves' | 'stats' | 'abilities' | 'evolution' | 'combat';
 
 @Component({
   selector: 'app-pokemon-info-component',
@@ -27,6 +28,7 @@ type Display = 'description' | 'moves' | 'stats' | 'abilities' | 'evolution';
     AbilitiesComponent,
     StatsComponent,
     EvolutionComponent,
+    CombatComponent
   ],
   templateUrl: './pokemon-info-component.html',
   styleUrl: './pokemon-info-component.css',
@@ -48,16 +50,23 @@ export class PokemonInfoComponent implements OnChanges, OnDestroy {
       text: 'Descripción',
       src: 'assets/img/icons/buttons/description.png',
     },
-    {
-      id: 'moves' as Display,
-      text: 'Movimientos',
-      src: 'assets/img/icons/buttons/moves.png',
-    },
+
     {
       id: 'stats' as Display,
       text: 'Estadisticas',
       src: 'assets/img/icons/buttons/stats.png',
     },
+    {
+      id: 'combat' as Display,
+      text: 'Combate',
+      src: 'assets/img/icons/buttons/combat.png',
+    },
+    {
+      id: 'moves' as Display,
+      text: 'Movimientos',
+      src: 'assets/img/icons/buttons/moves.png',
+    },
+
     {
       id: 'abilities' as Display,
       text: 'Habilidades',
