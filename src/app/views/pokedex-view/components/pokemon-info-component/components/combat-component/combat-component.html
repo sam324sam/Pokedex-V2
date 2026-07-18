@@ -2,60 +2,92 @@
 @if (isLoading()) {
   <img src="assets/img/icons/loading.gif" alt="cargando" class="w-40 mt-17 m-auto pixelated" />
 } @else {
-  <div class="mt-15 w-[92%] h-49 m-auto flex flex-col items-center gap-2">
-    <div class="flex flex-row">
-      <h3>Super débil (x4)</h3>
-      @for (item of getSuperWeak(); track item.name) {
-        <img
-          [src]="'assets/img/icons/types/' + item.name + '.png'"
-          class="pixelated h-10 w-10"
-          [alt]="item.name"
-        />
-      }
+  <div class="mt-15 w-[92%] h-49 m-auto grid-container">
+    <!--Debilidades-->
+    <div class="grid-item">
+      <div class="combat-info">
+        <h3 class="badge-x4 badge">x4</h3>
+        <div class="type">
+          @for (item of superWeak; track item.name) {
+            <img
+              [src]="'assets/img/icons/types/' + item.name + '.png'"
+              class="pixelated h-10 w-10"
+              [alt]="item.name"
+            />
+          }
+        </div>
+      </div>
+
+      <div class="combat-info">
+        <h3 class="badge-x2 badge">x2</h3>
+        <div class="type">
+          @for (item of weak; track item.name) {
+            <img
+              [src]="'assets/img/icons/types/' + item.name + '.png'"
+              class="pixelated h-10 w-10"
+              [alt]="item.name"
+            />
+          }
+        </div>
+      </div>
     </div>
 
-    <div class="flex flex-row">
-      <h3>Débil (x2)</h3>
-      @for (item of getWeak(); track item.name) {
-        <img
-          [src]="'assets/img/icons/types/' + item.name + '.png'"
-          class="pixelated h-10 w-10"
-          [alt]="item.name"
-        />
-      }
+    <!--Resistencias-->
+    <div class="grid-item">
+      <div class="combat-info">
+        <h3 class="badge-x05 badge">x0.5</h3>
+        <div class="type">
+          @for (item of resistant; track item.name) {
+            <img
+              [src]="'assets/img/icons/types/' + item.name + '.png'"
+              class="pixelated h-10 w-10"
+              [alt]="item.name"
+            />
+          }
+        </div>
+      </div>
+
+      <div class="combat-info">
+        <h3 class="badge-x025 badge">x0.25</h3>
+        <div class="type">
+          @for (item of superResistant; track item.name) {
+            <img
+              [src]="'assets/img/icons/types/' + item.name + '.png'"
+              class="pixelated h-10 w-10"
+              [alt]="item.name"
+            />
+          }
+        </div>
+      </div>
     </div>
 
-    <div class="flex flex-row">
-      <h3>Resistente (x0.5)</h3>
-      @for (item of getResistant(); track item.name) {
-        <img
-          [src]="'assets/img/icons/types/' + item.name + '.png'"
-          class="pixelated h-10 w-10"
-          [alt]="item.name"
-        />
-      }
-    </div>
+    <!--Inmune y nomal-->
+    <div class="grid-item-3 grid-item">
+      <div class="combat-info-2">
+        <h3 class="badge-x1 badge">x1</h3>
+        <div class="type-2">
+          @for (item of normalDamage; track item.name) {
+            <img
+              [src]="'assets/img/icons/types/' + item.name + '.png'"
+              class="pixelated h-10 w-10"
+              [alt]="item.name"
+            />
+          }
+        </div>
+      </div>
 
-    <div class="flex flex-row">
-      <h3>Muy resistente (x0.25)</h3>
-      @for (item of getSuperResistant(); track item.name) {
-        <img
-          [src]="'assets/img/icons/types/' + item.name + '.png'"
-          class="pixelated h-10 w-10"
-          [alt]="item.name"
-        />
-      }
-    </div>
-
-    <div class="flex flex-row">
-      <h3>Inmune (x0)</h3>
-      @for (item of getImmune(); track item.name) {
-        <img
-          [src]="'assets/img/icons/types/' + item.name + '.png'"
-          class="pixelated h-10 w-10"
-          [alt]="item.name"
-        />
-      }
+      <div class="combat-info-2">
+        <h3 class="badge-x0 badge">x0</h3>
+        <div class="type-2">
+          @for (item of immune; track item.name) {
+            <img
+              [src]="'assets/img/icons/types/' + item.name + '.png'"
+              class="pixelated h-10 w-10"
+              [alt]="item.name"
+            />
+          }
+        </div>
+      </div>
     </div>
   </div>
 }

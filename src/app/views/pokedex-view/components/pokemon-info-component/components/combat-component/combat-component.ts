@@ -10,76 +10,101 @@ import { TypePokemon } from '../../../../../../models/pokemon/pokemon.model';
   styleUrl: './combat-component.css',
 })
 export class CombatComponent implements OnInit {
+
   @Input() typesPokemon: TypePokemon[] = [];
+
   isLoading = signal(false);
+
   types: TypeDetails[] = [];
+
+  readonly ALL_TYPES = [
+    'normal',
+    'fire',
+    'water',
+    'electric',
+    'grass',
+    'ice',
+    'fighting',
+    'poison',
+    'ground',
+    'flying',
+    'psychic',
+    'bug',
+    'rock',
+    'ghost',
+    'dragon',
+    'dark',
+    'steel',
+    'fairy'
+  ];
+
   constructor(private readonly typeService: TypeService) {}
 
   ngOnInit(): void {
-    this.typeService.getTypes(this.typesPokemon).subscribe((types) => {
-      setTimeout(() => {
-        this.types = types;
-        this.isLoading.set(false);
-      });
+
+    this.isLoading.set(true);
+
+    this.typeService.getTypes(this.typesPokemon).subscribe(types => {
+      this.types = types;
+      this.isLoading.set(false);
     });
+
   }
 
   private getTypeMultipliers(): Map<string, number> {
+
     const multipliers = new Map<string, number>();
 
+    // Todos empiezan haciendo daño normal
+    this.ALL_TYPES.forEach(type => multipliers.set(type, 1));
+
     for (const type of this.types) {
-      // x2
+
       type.damage_relations.double_damage_from.forEach(({ name }) => {
-        multipliers.set(name, (multipliers.get(name) ?? 1) * 2);
+        multipliers.set(name, multipliers.get(name)! * 2);
       });
 
-      // x0.5
       type.damage_relations.half_damage_from.forEach(({ name }) => {
-        multipliers.set(name, (multipliers.get(name) ?? 1) * 0.5);
+        multipliers.set(name, multipliers.get(name)! * 0.5);
       });
 
-      // x0
       type.damage_relations.no_damage_from.forEach(({ name }) => {
         multipliers.set(name, 0);
       });
+
     }
 
     return multipliers;
   }
 
-  getSuperWeak() {
+  private getByMultiplier(multiplier: number) {
     return [...this.getTypeMultipliers()]
-      .filter(([_, multiplier]) => multiplier === 4)
+      .filter(([_, value]) => value === multiplier)
       .map(([name]) => ({ name }));
   }
 
-  getWeak() {
-    return [...this.getTypeMultipliers()]
-      .filter(([_, multiplier]) => multiplier === 2)
-      .map(([name]) => ({ name }));
+  get superWeak() {
+    return this.getByMultiplier(4);
   }
 
-  getNormalDamage() {
-    return [...this.getTypeMultipliers()]
-      .filter(([_, multiplier]) => multiplier === 1)
-      .map(([name]) => ({ name }));
+  get weak() {
+    return this.getByMultiplier(2);
   }
 
-  getResistant() {
-    return [...this.getTypeMultipliers()]
-      .filter(([_, multiplier]) => multiplier === 0.5)
-      .map(([name]) => ({ name }));
+  get normalDamage() {
+    return this.getByMultiplier(1);
   }
 
-  getSuperResistant() {
-    return [...this.getTypeMultipliers()]
-      .filter(([_, multiplier]) => multiplier === 0.25)
-      .map(([name]) => ({ name }));
+  get resistant() {
+    return this.getByMultiplier(0.5);
   }
 
-  getImmune() {
-    return [...this.getTypeMultipliers()]
-      .filter(([_, multiplier]) => multiplier === 0)
-      .map(([name]) => ({ name }));
+  get superResistant() {
+    return this.getByMultiplier(0.25);
   }
+
+  get immune() {
+    return this.getByMultiplier(0);
+  }
+
 }

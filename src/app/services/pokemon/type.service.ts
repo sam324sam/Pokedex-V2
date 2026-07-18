@@ -13,4 +13,5 @@ export class TypeService {
   getTypes(types: TypePokemon[]): Observable<TypeDetails[]> {
     return forkJoin(types.map((type) => this.http.get<TypeDetails>(type.type.url)));
   }
+  
 }
