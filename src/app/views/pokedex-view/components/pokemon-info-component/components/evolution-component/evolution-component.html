@@ -3,20 +3,14 @@
 @if (isLoading()) {
   <img src="assets/img/icons/loading.gif" alt="cargando" class="w-40 mt-17 m-auto" />
 } @else if (evolutionChain.chain) {
-  <div class=" gap-1 p-1 mt-15 w-[92%] h-49 m-auto overflow-auto">
-    @for (
-      node of getEvolutionList(evolutionChain.chain);
-      track node.species.name;
-      let last = $last
-    ) {
-      <div class="flex items-center gap-2">
-        <img [src]="node.pokemon.sprites.front_default" [alt]="node.pokemon.name" />
-        <span>{{ node.pokemon.name }}</span>
-      </div>
-
-      @if (!last) {
-        <div>↓</div>
-      }
+  <div class="gap-1 p-1 mt-15 w-[92%] h-49.5 m-auto overflow-auto">
+    @if (evolutionChain.chain.evolves_to.length == 0) {
+      No hay informacion
+    } @else {
+      <app-evolution-node
+        [node]="evolutionChain.chain"
+        (changePokemonInfo)="changePokemonInfo.emit($event)"
+      ></app-evolution-node>
     }
   </div>
 }

@@ -1,0 +1,141 @@
+@if (node) {
+  <div class="evolution-node">
+    <button class="pokemon-card" (click)="changePokemon(node.pokemon)">
+      <img
+        [src]="node.pokemon.sprites.front_default"
+        [alt]="node.pokemon.name"
+        class="pixelated w-16 h-16"
+        [title]="node.pokemon.name"
+      />
+    </button>
+
+    @if (node.evolves_to.length) {
+      <img src="assets/img/icons/row-2.png" alt="" />
+
+      <div class="children">
+        @for (child of node.evolves_to; track child.species.name) {
+          <div class="child">
+            <span class="method">
+              @if (child.evolution_details.length) {
+                @let detail = child.evolution_details[0];
+
+                @if (detail.min_level) {
+                  <span>Nv. {{ detail.min_level }}</span>
+                }
+
+                @if (detail.item) {
+                  <img
+                    [src]="
+                      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/' +
+                      detail.item.name +
+                      '.png'
+                    "
+                    [title]="detail.item.name"
+                    [alt]="detail.item.name"
+                    class="img-obj pixelated"
+                  />
+                }
+
+                @if (detail.trigger?.name === 'trade') {
+                  <span>Imtercambio</span>
+                }
+
+                @if (detail.held_item) {
+                  <img
+                    [src]="
+                      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/' +
+                      detail.held_item.name +
+                      '.png'
+                    "
+                    [title]="'Equipar ' + detail.held_item.name"
+                    [alt]="detail.held_item.name"
+                    class="img-obj pixelated"
+                  />
+                }
+
+                @if (detail.min_happiness) {
+                  <span>Felicidad {{ detail.min_happiness }} </span>
+                }
+
+                @if (detail.min_affection) {
+                  <span>Afecto {{ detail.min_affection }} </span>
+                }
+
+                @if (detail.min_beauty) {
+                  <span>Belleza {{ detail.min_beauty }} </span>
+                }
+
+                @if (detail.time_of_day) {
+                  <span>{{ detail.time_of_day }} </span>
+                }
+
+                @if (detail.location) {
+                  <span>{{ detail.location.name }} </span>
+                }
+
+                @if (detail.known_move) {
+                  <span>{{ detail.known_move.name }} </span>
+                }
+
+                @if (detail.known_move_type) {
+                  <img
+                    [src]="'assets/img/icons/types/' + detail.known_move_type.name + '.png'"
+                    [alt]="detail.known_move_type.name"
+                    class="img-obj pixelated"
+                  />
+                }
+
+                @if (detail.party_type) {
+                  <img
+                    [src]="'assets/img/icons/types/' + detail.party_type.name + '.png'"
+                    [alt]="detail.party_type.name"
+                    class="img-obj pixelated"
+                  />
+                }
+
+                @if (detail.party_species) {
+                  <span>{{ detail.party_species.name }} </span>
+                }
+
+                @if (detail.trade_species) {
+                  <span>{{ detail.trade_species.name }} </span>
+                }
+
+                @if (detail.needs_overworld_rain) {
+                  <span> Lluvia </span>
+                }
+
+                @if (detail.needs_multiplayer) {
+                  <span> Online </span>
+                }
+
+                @if (detail.turn_upside_down) {
+                  <span> Pinche 3ds </span>
+                }
+
+                @if (detail.relative_physical_stats === 1) {
+                  <span> ATK &gt; DEF </span>
+                }
+
+                @if (detail.relative_physical_stats === 0) {
+                  <span> ATK = DEF </span>
+                }
+
+                @if (detail.relative_physical_stats === -1) {
+                  <span> ATK &lt; DEF </span>
+                }
+
+                @if (detail.region) {
+                  <span> {{ detail.region.name }} </span>
+                }
+              }
+            </span>
+
+            <app-evolution-node [node]="child" (changePokemonInfo)="changePokemonInfo.emit($event)">
+            </app-evolution-node>
+          </div>
+        }
+      </div>
+    }
+  </div>
+}

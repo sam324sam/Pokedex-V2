@@ -1,0 +1,53 @@
+.evolution-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pokemon-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  transition: transform 0.15s;
+}
+
+.pokemon-card:hover {
+  transform: scale(1.05);
+}
+
+.connector {
+  width: 2px;
+  height: 18px;
+  background: black;
+  margin: 4px 0;
+}
+
+.children {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.child {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.method {
+  font-size: 10px;
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.img-obj {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+}

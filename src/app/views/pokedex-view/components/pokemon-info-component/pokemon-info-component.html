@@ -42,7 +42,12 @@
         />
       </button>
 
-      <button class="cursor-pointer" (click)="playCries( pokemonInfo.cries.latest)" [disabled]="audioplaying()" title="Escuchar sonido">
+      <button
+        class="cursor-pointer"
+        (click)="playCries(pokemonInfo.cries.latest)"
+        [disabled]="audioplaying()"
+        title="Escuchar sonido"
+      >
         <img
           src="assets/img/icons/buttons/audio.png"
           alt="shiny"
@@ -96,7 +101,11 @@
             }
 
             @case ('evolution') {
-              <app-evolution-component [pokemonSpecies]="pokemonSpecies"> </app-evolution-component>
+              <app-evolution-component
+                [pokemonSpecies]="pokemonSpecies"
+                (changePokemonInfo)="changePokemonInfo($event)"
+              >
+              </app-evolution-component>
             }
 
             @case ('combat') {

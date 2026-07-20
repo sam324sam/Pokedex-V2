@@ -1,24 +1,36 @@
-import { Component, Input, OnChanges, signal, SimpleChanges } from '@angular/core';
-import { PokemonSpecies } from '../../../../../../models/pokemon/pokemon.model';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  signal,
+  SimpleChanges,
+} from '@angular/core';
+import { Pokemon, PokemonSpecies } from '../../../../../../models/pokemon/pokemon.model';
 import { EvolutionService } from '../../../../../../services/pokemon/evolution.service';
 import { ChainLink, EvolutionChain } from '../../../../../../models/pokemon/evolution.model';
 import { PokemonService } from '../../../../../../services/pokemon/pokemon.service';
 import { firstValueFrom } from 'rxjs';
+import { SoundService } from '../../../../../../services/sound.service';
+import { EvolutionNode } from '../../../../../../components/evolution-node/evolution-node';
 
 @Component({
   selector: 'app-evolution-component',
-  imports: [],
+  imports: [EvolutionNode],
   templateUrl: './evolution-component.html',
   styleUrl: './evolution-component.css',
 })
 export class EvolutionComponent implements OnChanges {
   @Input() pokemonSpecies: PokemonSpecies | null = null;
+  @Output() changePokemonInfo = new EventEmitter<Pokemon>();
   evolutionChain: EvolutionChain = {} as EvolutionChain;
   isLoading = signal(false);
 
   constructor(
     private readonly evolutionService: EvolutionService,
     private readonly pokemonService: PokemonService,
+    private readonly soundService: SoundService,
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -31,14 +43,18 @@ export class EvolutionComponent implements OnChanges {
     if (!this.pokemonSpecies) return;
 
     this.isLoading.set(true);
+    try {
+      this.evolutionChain = await firstValueFrom(
+        this.evolutionService.getEvolutionChain(this.pokemonSpecies),
+      );
 
-    this.evolutionChain = await firstValueFrom(
-      this.evolutionService.getEvolutionChain(this.pokemonSpecies),
-    );
+      await this.loadPokemon(this.evolutionChain.chain);
 
-    await this.loadPokemon(this.evolutionChain.chain);
-
-    this.isLoading.set(false);
+      this.isLoading.set(false);
+    } catch (error) {
+      this.isLoading.set(false);
+      console.log(error);
+    }
   }
 
   private async loadPokemon(node: ChainLink): Promise<void> {
@@ -57,5 +73,10 @@ export class EvolutionComponent implements OnChanges {
     });
 
     return result;
+  }
+
+  changePokemon(pokemonInfo: Pokemon) {
+    this.soundService.playEfects('select');
+    this.changePokemonInfo.emit(pokemonInfo);
   }
 }

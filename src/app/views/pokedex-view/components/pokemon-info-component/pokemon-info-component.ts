@@ -28,7 +28,7 @@ type Display = 'description' | 'moves' | 'stats' | 'abilities' | 'evolution' | '
     AbilitiesComponent,
     StatsComponent,
     EvolutionComponent,
-    CombatComponent
+    CombatComponent,
   ],
   templateUrl: './pokemon-info-component.html',
   styleUrl: './pokemon-info-component.css',
@@ -39,7 +39,7 @@ export class PokemonInfoComponent implements OnChanges, OnDestroy {
   pokemonSpecies: PokemonSpecies | null = null;
   isLoading = signal(false);
   shiny = signal(false);
-  audioplaying = signal(false)
+  audioplaying = signal(false);
   // Apartado para los botones
   currentDisplay = signal<Display>('description');
   private readonly defaultSprite =
@@ -101,7 +101,7 @@ export class PokemonInfoComponent implements OnChanges, OnDestroy {
         this.isLoading.set(false);
         this.pokemonService.getPokemonSpecie(pokemon.species.name).subscribe((species) => {
           this.pokemonSpecies = species;
-          console.log("Pokemon Info" ,this.pokemonInfo, "Pokemon spices", this.pokemonSpecies);
+          console.log('Pokemon Info', this.pokemonInfo, 'Pokemon spices', this.pokemonSpecies);
           // Esto siempre lo arregla
           setTimeout(() => {
             this.cdr.detectChanges();
@@ -143,10 +143,10 @@ export class PokemonInfoComponent implements OnChanges, OnDestroy {
     this.soundService.playEfects('select');
   }
 
-  async playCries(src: string){
-    this.audioplaying.set(true)
+  async playCries(src: string) {
+    this.audioplaying.set(true);
     await this.soundService.playEfects('', 0.2, src);
-    this.audioplaying.set(false)
+    this.audioplaying.set(false);
   }
 
   get backGroundImg(): string {
@@ -177,5 +177,13 @@ export class PokemonInfoComponent implements OnChanges, OnDestroy {
     }
 
     return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${id}.gif`;
+  }
+
+  changePokemonInfo(pokemon: Pokemon) {
+    this.pokemonInfo = pokemon;
+
+    this.pokemonService.getPokemonSpecie(pokemon.species.name).subscribe((species) => {
+      this.pokemonSpecies = species;
+    });
   }
 }
