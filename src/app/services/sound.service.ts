@@ -30,7 +30,7 @@ export class SoundService {
   playMusic(name: string = 'default', loop = true): void {
     const src = this.music.get(name);
     const audio = new Audio(src);
-    
+
     // Comprobar que no se este ejecutando esa musica para no cambiarla
     if (this.currentMusic) {
       if (this.currentMusic.src == audio.src) return;
@@ -39,7 +39,7 @@ export class SoundService {
     }
     audio.loop = loop;
     audio.volume = 0.5;
-    console.log(audio, "Esto va");
+    console.log(audio, 'Esto va');
     audio
       .play()
       .then(() => {
@@ -58,18 +58,30 @@ export class SoundService {
   }
 
   // ========== Efectos
-  playEfects(key: string, volume = 0.5, src = this.efects.get(key)): void {
+  async playEfects(key: string, volume = 0.5, src = this.efects.get(key)): Promise<void> {
     if (!src) return;
 
     if (this.curretnEfect) {
       this.curretnEfect.pause();
+      this.curretnEfect.currentTime = 0;
       this.curretnEfect = null;
     }
 
     const audio = new Audio(src);
     audio.volume = volume;
-    audio.play().catch(() => {});
-
     this.curretnEfect = audio;
+
+    await audio.play();
+
+    await new Promise<void>((resolve) => {
+      audio.addEventListener(
+        'ended',
+        () => {
+          this.curretnEfect = null;
+          resolve();
+        },
+        { once: true },
+      );
+    });
   }
 }

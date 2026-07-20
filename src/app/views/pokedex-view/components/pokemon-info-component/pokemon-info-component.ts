@@ -39,6 +39,7 @@ export class PokemonInfoComponent implements OnChanges, OnDestroy {
   pokemonSpecies: PokemonSpecies | null = null;
   isLoading = signal(false);
   shiny = signal(false);
+  audioplaying = signal(false)
   // Apartado para los botones
   currentDisplay = signal<Display>('description');
   private readonly defaultSprite =
@@ -100,7 +101,7 @@ export class PokemonInfoComponent implements OnChanges, OnDestroy {
         this.isLoading.set(false);
         this.pokemonService.getPokemonSpecie(pokemon.species.name).subscribe((species) => {
           this.pokemonSpecies = species;
-          console.log(this.pokemonInfo);
+          console.log("Pokemon Info" ,this.pokemonInfo, "Pokemon spices", this.pokemonSpecies);
           // Esto siempre lo arregla
           setTimeout(() => {
             this.cdr.detectChanges();
@@ -140,6 +141,12 @@ export class PokemonInfoComponent implements OnChanges, OnDestroy {
   changeDisplay(display: Display) {
     this.currentDisplay.set(display);
     this.soundService.playEfects('select');
+  }
+
+  async playCries(src: string){
+    this.audioplaying.set(true)
+    await this.soundService.playEfects('', 0.2, src);
+    this.audioplaying.set(false)
   }
 
   get backGroundImg(): string {

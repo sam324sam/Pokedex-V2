@@ -10,6 +10,11 @@ export interface Pokemon {
   species: {
     name: string;
   };
+
+  cries: {
+    latest: string;
+  };
+
   moves: MovePokemon[];
   types: TypePokemon[];
   abilities: AbilityPokemon[];
@@ -66,6 +71,9 @@ export interface TypePokemon {
 
 export interface PokemonSpecies {
   flavor_text_entries: FlavorTextEntry[];
+  evolution_chain: {
+    url: string;
+  };
 }
 
 export interface FlavorTextEntry {

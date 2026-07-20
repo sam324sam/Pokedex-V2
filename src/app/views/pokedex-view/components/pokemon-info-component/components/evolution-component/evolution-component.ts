@@ -1,4 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges, signal, SimpleChanges } from '@angular/core';
+import { PokemonSpecies } from '../../../../../../models/pokemon/pokemon.model';
+import { EvolutionService } from '../../../../../../services/pokemon/evolution.service';
+import { ChainLink, EvolutionChain } from '../../../../../../models/pokemon/evolution.model';
+import { PokemonService } from '../../../../../../services/pokemon/pokemon.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-evolution-component',
@@ -6,6 +11,51 @@ import { Component } from '@angular/core';
   templateUrl: './evolution-component.html',
   styleUrl: './evolution-component.css',
 })
-export class EvolutionComponent {
-  
+export class EvolutionComponent implements OnChanges {
+  @Input() pokemonSpecies: PokemonSpecies | null = null;
+  evolutionChain: EvolutionChain = {} as EvolutionChain;
+  isLoading = signal(false);
+
+  constructor(
+    private readonly evolutionService: EvolutionService,
+    private readonly pokemonService: PokemonService,
+  ) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['pokemonSpecies']?.currentValue) {
+      this.loadEvolution();
+    }
+  }
+
+  private async loadEvolution(): Promise<void> {
+    if (!this.pokemonSpecies) return;
+
+    this.isLoading.set(true);
+
+    this.evolutionChain = await firstValueFrom(
+      this.evolutionService.getEvolutionChain(this.pokemonSpecies),
+    );
+
+    await this.loadPokemon(this.evolutionChain.chain);
+
+    this.isLoading.set(false);
+  }
+
+  private async loadPokemon(node: ChainLink): Promise<void> {
+    node.pokemon = await firstValueFrom(this.pokemonService.getPokemon(node.species.name));
+
+    for (const child of node.evolves_to) {
+      await this.loadPokemon(child);
+    }
+  }
+
+  getEvolutionList(node: ChainLink): ChainLink[] {
+    const result: ChainLink[] = [node];
+
+    node.evolves_to.forEach((child) => {
+      result.push(...this.getEvolutionList(child));
+    });
+
+    return result;
+  }
 }

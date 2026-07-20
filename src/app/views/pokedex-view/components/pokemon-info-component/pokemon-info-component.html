@@ -16,8 +16,10 @@
           {{ pokemonInfo.id }}
         </div>
 
-        <div class=" absolute ml-34 flex-1 overflow-x-auto overflow-y-hidden whitespace-nowrap w-full">
-          <span class=" w-full">
+        <div
+          class="absolute ml-34 flex-1 overflow-x-auto overflow-y-hidden whitespace-nowrap w-full"
+        >
+          <span class="w-full">
             {{ pokemonInfo.name.toUpperCase() }}
           </span>
         </div>
@@ -31,11 +33,21 @@
         class="absolute inset-0 object-fill pixelated -z-10 select-none pointer-events-none w-[94%] m-auto mt-0 h-88"
       />
 
-      <button class="cursor-pointer" (click)="viewShiny()">
+      <button class="cursor-pointer" (click)="viewShiny()" title="Ver forma shiny">
         <img
-          src="assets/img/icons/shiny.png"
+          src="assets/img/icons/buttons/shiny.png"
           alt="shiny"
-          class="absolute flex h-10 w-10 flex-row ml-153 mt-15 pixelated"
+          class="absolute flex h-10 w-10 ml-153 mt-15 pixelated transition-all"
+          [style.opacity]="shiny() ? 1 : 0.5"
+        />
+      </button>
+
+      <button class="cursor-pointer" (click)="playCries( pokemonInfo.cries.latest)" [disabled]="audioplaying()" title="Escuchar sonido">
+        <img
+          src="assets/img/icons/buttons/audio.png"
+          alt="shiny"
+          class="absolute flex h-8 w-20 ml-140.5 mt-75 pixelated transition-all"
+          [style.opacity]="audioplaying() ? 1 : 0.5"
         />
       </button>
 
@@ -84,7 +96,7 @@
             }
 
             @case ('evolution') {
-              <app-evolution-component> </app-evolution-component>
+              <app-evolution-component [pokemonSpecies]="pokemonSpecies"> </app-evolution-component>
             }
 
             @case ('combat') {
