@@ -15,4 +15,8 @@ export class MoveService {
 
     return forkJoin(requests);
   }
+
+  getMoveData(moveUrl: string): Observable<Move> {
+    return this.http.get<Move>(moveUrl);
+  }
 }

@@ -88,7 +88,7 @@
             }
 
             @case ('moves') {
-              <app-moves-component [movesPokemon]="pokemonInfo.moves"> </app-moves-component>
+              <app-moves-component [movesPokemon]="pokemonInfo.moves" [moveInput]="move"> </app-moves-component>
             }
 
             @case ('stats') {
@@ -104,6 +104,7 @@
               <app-evolution-component
                 [pokemonSpecies]="pokemonSpecies"
                 (changePokemonInfo)="changePokemonInfo($event)"
+                (showMoveData)="showMoveData($event)"
               >
               </app-evolution-component>
             }

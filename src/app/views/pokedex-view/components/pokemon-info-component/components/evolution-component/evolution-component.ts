@@ -14,6 +14,7 @@ import { PokemonService } from '../../../../../../services/pokemon/pokemon.servi
 import { firstValueFrom } from 'rxjs';
 import { SoundService } from '../../../../../../services/sound.service';
 import { EvolutionNode } from '../../../../../../components/evolution-node/evolution-node';
+import { Move } from '../../../../../../models/pokemon/move.model';
 
 @Component({
   selector: 'app-evolution-component',
@@ -24,6 +25,7 @@ import { EvolutionNode } from '../../../../../../components/evolution-node/evolu
 export class EvolutionComponent implements OnChanges {
   @Input() pokemonSpecies: PokemonSpecies | null = null;
   @Output() changePokemonInfo = new EventEmitter<Pokemon>();
+  @Output() showMoveData = new EventEmitter<Move>()
   evolutionChain: EvolutionChain = {} as EvolutionChain;
   isLoading = signal(false);
 
@@ -49,7 +51,7 @@ export class EvolutionComponent implements OnChanges {
       );
 
       await this.loadPokemon(this.evolutionChain.chain);
-
+      console.log(this.evolutionChain)
       this.isLoading.set(false);
     } catch (error) {
       this.isLoading.set(false);

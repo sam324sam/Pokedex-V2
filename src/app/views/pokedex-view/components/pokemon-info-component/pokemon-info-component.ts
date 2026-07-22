@@ -17,8 +17,7 @@ import { AbilitiesComponent } from './components/abilities-component/abilities-c
 import { StatsComponent } from './components/stats-component/stats-component';
 import { EvolutionComponent } from './components/evolution-component/evolution-component';
 import { CombatComponent } from './components/combat-component/combat-component';
-
-type Display = 'description' | 'moves' | 'stats' | 'abilities' | 'evolution' | 'combat';
+import { Move } from '../../../../models/pokemon/move.model';
 
 @Component({
   selector: 'app-pokemon-info-component',
@@ -40,6 +39,7 @@ export class PokemonInfoComponent implements OnChanges, OnDestroy {
   isLoading = signal(false);
   shiny = signal(false);
   audioplaying = signal(false);
+  move: Move | null = null;
   // Apartado para los botones
   currentDisplay = signal<Display>('description');
   private readonly defaultSprite =
@@ -139,8 +139,17 @@ export class PokemonInfoComponent implements OnChanges, OnDestroy {
   }
 
   changeDisplay(display: Display) {
-    this.currentDisplay.set(display);
     this.soundService.playEfects('select');
+    this.currentDisplay.set(display);
+  }
+
+  showMoveData(move: Move) {
+    this.move = move;
+    this.changeDisplay('moves' as Display);
+    // La clave es el settimeout
+    setTimeout(() => {
+      this.move = null;
+    });
   }
 
   async playCries(src: string) {

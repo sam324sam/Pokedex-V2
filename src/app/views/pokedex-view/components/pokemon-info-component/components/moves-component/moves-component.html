@@ -34,7 +34,7 @@
       />
 
       @if (move) {
-        <div class="absolute ml-64.5 mt-2 flex flex-col gap-2 text-center">
+        <div class="absolute ml-64.5 mt-2 flex flex-col gap-2 text-center cursor-pointer">
           <img
             [src]="'assets/img/icons/types/' + move.type.name + '.png'"
             [alt]="move.type.name"
@@ -46,6 +46,7 @@
             [src]="'assets/img/icons/class-damage/' + move.damage_class.name + '.png'"
             [alt]="move.damage_class.name"
             class="w-9 h-6 object-fill pixelated"
+            [title]="move.damage_class.name"
           />
 
           @if (selectedMovePokemon) {
@@ -75,7 +76,7 @@
           }
         </div>
 
-        <div class="relative z-10 p-3 pb-2 -mt-1 text-[0.75rem] overflow-x-auto text-white">
+        <div class="relative z-10 p-3 pb-2 w-60 -mt-1 text-[0.75rem] overflow-x-auto text-white">
           {{ getSpanishName(move) }}
         </div>
         <div class="relative z-10 p-3 pt-0 text-[0.65rem] mr-18 overflow-y-auto h-25">

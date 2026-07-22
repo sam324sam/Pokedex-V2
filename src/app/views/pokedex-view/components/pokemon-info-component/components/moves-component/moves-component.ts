@@ -16,6 +16,7 @@ export class MovesComponent implements OnInit {
   isLoading = signal(false);
   moves: Move[] = [];
   selectedMovePokemon: MovePokemon | null = null;
+  @Input() moveInput: Move | null = null;
   move: Move | null = null;
 
   moveSearch = signal('');
@@ -27,6 +28,12 @@ export class MovesComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading.set(true);
+
+    // Cuando viene del evolution
+    this.move = this.moveInput;
+    this.selectedMovePokemon =
+      this.movesPokemon.find((m) => m.move.name === this.move?.name) ?? null;
+
     this.moveService.getMovesData(this.movesPokemon).subscribe((moves) => {
       this.moves = moves;
       this.isLoading.set(false);
