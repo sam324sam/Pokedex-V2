@@ -2,9 +2,11 @@
   ><div class="flex flex-row gap-3">
     <img src="assets/img/icons/search.png" alt="Lupa" />
     <input
+      #searchInput
       [ngModel]="moveSearch()"
       (click)="playEfectSearch()"
       (ngModelChange)="moveSearch.set($event)"
+      (keydown.enter)="closeKeyboard(searchInput)"
       placeholder="Buscar Movimientos..."
       id=""
     />

@@ -90,6 +90,7 @@ export class PokemonInfoComponent implements OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['pokemonNameSelect']?.currentValue) {
+      this.audioplaying.set(false);
       this.isLoading.set(true);
       this.pokemonSubscription?.unsubscribe();
 
@@ -154,8 +155,13 @@ export class PokemonInfoComponent implements OnChanges, OnDestroy {
 
   async playCries(src: string) {
     this.audioplaying.set(true);
-    await this.soundService.playEfects('', 0.2, src);
-    this.audioplaying.set(false);
+    try {
+      await this.soundService.playEfects('', 0.2, src);
+    } catch (error) {
+      console.log('Ocurrio un error al reproducir el audio', error);
+    } finally {
+      this.audioplaying.set(false);
+    }
   }
 
   get backGroundImg(): string {

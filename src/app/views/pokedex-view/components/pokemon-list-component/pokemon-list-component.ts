@@ -52,6 +52,10 @@ export class PokemonListComponent {
     return Array.from({ length: end - start + 1 }, (_, i) => start + i);
   });
 
+  closeKeyboard(input: HTMLInputElement): void {
+    input.blur();
+  }
+
   playEfectSearch() {
     this.soundService.playEfects('search-bar', 0.4);
   }

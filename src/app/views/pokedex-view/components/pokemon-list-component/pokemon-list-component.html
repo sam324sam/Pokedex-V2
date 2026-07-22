@@ -11,11 +11,14 @@
       <div class="flex flex-row gap-4">
         <img src="assets/img/icons/search.png" alt="Lupa" />
         <input
+          #searchInput
           [ngModel]="pokemonSearch()"
           (click)="playEfectSearch()"
+          (keydown.enter)="closeKeyboard(searchInput)"
           (ngModelChange)="pokemonSearch.set($event)"
           placeholder="Buscar pokemon..."
           id=""
+          class="w-135"
         />
       </div>
       <img src="assets/img/icons/search-2.png" alt="Lupa" />

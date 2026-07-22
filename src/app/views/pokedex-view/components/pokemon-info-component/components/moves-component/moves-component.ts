@@ -53,6 +53,10 @@ export class MovesComponent implements OnInit {
     this.soundService.playEfects('search-bar', 0.4);
   }
 
+  closeKeyboard(input: HTMLInputElement): void {
+    input.blur();
+  }
+
   getSpanishName(move: Move): string {
     return move.names.find((n) => n.language.name === 'es')?.name ?? move.name;
   }
