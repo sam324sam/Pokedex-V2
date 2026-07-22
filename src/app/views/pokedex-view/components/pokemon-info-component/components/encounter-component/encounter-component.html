@@ -1,0 +1,41 @@
+<span class="title-data-pokedex">Dónde encontrarlo</span>
+
+@if (isLoading()) {
+  <img src="assets/img/icons/loading.gif" alt="cargando" class="w-40 mt-17 m-auto pixelated" />
+} @else {
+  <div class="gap-1 p-1 mt-15 w-[92%] h-49.5 m-auto overflow-auto">
+    @if (hasError()) {
+      <p class="h-49.5 text-center text-sm text-gray-500">
+        No se pudo cargar la información de encuentros.
+      </p>
+    } @else if (!hasEncounters()) {
+      <p class="text-center text-sm text-gray-500">
+        Este Pokémon no puede encontrarse en estado salvaje (evolución, huevo, o solo intercambio).
+      </p>
+    } @else {
+      <div class="m-auto encounter-list pr-1">
+        @for (group of encountersByLocation(); track group.location) {
+          <div class="location-card">
+            <h3 class="location-name">{{ group.location }}</h3>
+            <div class="rows">
+              @for (row of group.rows; track row.version + row.method + row.minLevel) {
+                <div class="encounter-row">
+                  <span class="version-badge">{{ row.version }}</span>
+                  <span class="method">{{ row.method }}</span>
+                  <span class="level">
+                    @if (row.minLevel === row.maxLevel) {
+                      Nv. {{ row.minLevel }}
+                    } @else {
+                      Nv. {{ row.minLevel }}-{{ row.maxLevel }}
+                    }
+                  </span>
+                  <span class="chance">{{ row.chance }}%</span>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+}

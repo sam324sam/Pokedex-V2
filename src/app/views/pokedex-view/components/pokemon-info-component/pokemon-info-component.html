@@ -88,7 +88,8 @@
             }
 
             @case ('moves') {
-              <app-moves-component [movesPokemon]="pokemonInfo.moves" [moveInput]="move"> </app-moves-component>
+              <app-moves-component [movesPokemon]="pokemonInfo.moves" [moveInput]="move">
+              </app-moves-component>
             }
 
             @case ('stats') {
@@ -111,6 +112,10 @@
 
             @case ('combat') {
               <app-combat-component [typesPokemon]="pokemonInfo.types"> </app-combat-component>
+            }
+
+            @case ('encounter') {
+              <app-encounter-component [pokemonId]="pokemonInfo.id"></app-encounter-component>
             }
           }
         </div>

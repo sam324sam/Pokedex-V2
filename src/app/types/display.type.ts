@@ -1,1 +1,8 @@
-type Display = 'description' | 'moves' | 'stats' | 'abilities' | 'evolution' | 'combat';
+type Display =
+  | 'description'
+  | 'moves'
+  | 'stats'
+  | 'abilities'
+  | 'evolution'
+  | 'combat'
+  | 'encounter';

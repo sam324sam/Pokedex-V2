@@ -1,0 +1,61 @@
+.encounter-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.location-card {
+  border: 2px solid black;
+  border-radius: 8px;
+  padding: 8px;
+  background: #f9fafb;
+}
+
+.location-name {
+  font-size: 0.85rem;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.encounter-row {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr 0.8fr 0.6fr;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  padding: 4px 6px;
+  background: white;
+  border-radius: 4px;
+  border: 1px solid #e5e7eb;
+}
+
+.version-badge {
+  background: #4b5563;
+  color: white;
+  border-radius: 4px;
+  padding: 2px 6px;
+  text-align: center;
+  font-size: 0.65rem;
+}
+
+.method {
+  color: #374151;
+}
+
+.level {
+  color: #6b7280;
+}
+
+.chance {
+  font-weight: bold;
+  color: #059669;
+  text-align: right;
+}

@@ -18,6 +18,7 @@ import { StatsComponent } from './components/stats-component/stats-component';
 import { EvolutionComponent } from './components/evolution-component/evolution-component';
 import { CombatComponent } from './components/combat-component/combat-component';
 import { Move } from '../../../../models/pokemon/move.model';
+import { EncounterComponent } from "./components/encounter-component/encounter-component";
 
 @Component({
   selector: 'app-pokemon-info-component',
@@ -28,7 +29,8 @@ import { Move } from '../../../../models/pokemon/move.model';
     StatsComponent,
     EvolutionComponent,
     CombatComponent,
-  ],
+    EncounterComponent
+],
   templateUrl: './pokemon-info-component.html',
   styleUrl: './pokemon-info-component.css',
 })
@@ -67,7 +69,11 @@ export class PokemonInfoComponent implements OnChanges, OnDestroy {
       text: 'Movimientos',
       src: 'assets/img/icons/buttons/moves.png',
     },
-
+    {
+      id: 'encounter' as Display,
+      text: 'Donde Conseguirlo',
+      src: 'assets/img/icons/buttons/encounter.png',
+    },
     {
       id: 'abilities' as Display,
       text: 'Habilidades',
