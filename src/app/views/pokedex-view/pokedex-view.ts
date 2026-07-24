@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit, signal } from '@angular/core';
 import { BackgroundService } from '../../services/background.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { PokemonService } from '../../services/pokemon/pokemon.service';
 import { AnimationService } from '../../services/animation.service';
 import { PokemonInfoComponent } from './components/pokemon-info-component/pokemon-info-component';
@@ -9,7 +9,7 @@ import { PokemonListItem } from '../../models/pokemon/pokemon-list.model';
 
 @Component({
   selector: 'app-pokedex-view',
-  imports: [PokemonInfoComponent, PokemonListComponent],
+  imports: [PokemonInfoComponent, PokemonListComponent, RouterLink],
   templateUrl: './pokedex-view.html',
   styleUrl: './pokedex-view.css',
 })

@@ -26,7 +26,7 @@ export class HomeView implements OnInit {
     this.backgroundService.fadeIn();
   }
 
-  changeView() {
-    this.backgroundService.changeView('pokedex');
+  changeView(url: string) {
+    this.backgroundService.changeView(url);
   }
 }

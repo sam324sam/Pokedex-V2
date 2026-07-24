@@ -42,6 +42,13 @@
         "frameHeight": 900,
         "description": "",
         "animationType": "once"
+      },
+      "select-minigames": {
+        "src": "assets/animations/background/select-minigames.png",
+        "frameWidth": 230,
+        "frameHeight": 129,
+        "description": "",
+        "animationType": "loop"
       }
     }
   }
