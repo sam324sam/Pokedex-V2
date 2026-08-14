@@ -1,1 +1,42 @@
-<p>select-minigames-view works!</p>
+@if (currentDisplay() !== 'select') {
+  <button
+    class="flex align-middle justify-center w-full tracking-widest uppercase drop-shadow-md mb-2 mt-20 hover:cursor-pointer"
+    (click)="changeDisplay('select')"
+  >
+    Atras
+  </button>
+}
+
+@switch (currentDisplay()) {
+  @case ('select') {
+    <h1 class="text-center tracking-widest uppercase drop-shadow-md mb-2 mt-20">
+      selecciona el minijuego
+    </h1>
+
+    <div class="flex flex-row justify-center gap-4 p-2">
+      @for (button of buttons; track button.id) {
+        <button (click)="changeDisplay(button.id)">
+          <img
+            [src]="button.src"
+            [alt]="button.text"
+            class="w-50 h-50 pixelated hover:scale-110 transition-all hover:cursor-pointer"
+            draggable="false"
+          />
+
+          <span
+            class="absolute -top-10 left-1/2 -translate-x-1/2 bg-red-600 text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap font-bold border border-black pointer-events-none"
+          >
+            {{ button.text }}
+          </span>
+        </button>
+      }
+    </div>
+  }
+
+  @case ('memory') {
+    <app-memory-component></app-memory-component>
+  }
+  @default {
+    <span class="text-gray-500 font-mono animate-pulse">Loading system...</span>
+  }
+}

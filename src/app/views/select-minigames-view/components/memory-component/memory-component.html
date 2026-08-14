@@ -1,0 +1,9 @@
+<div class="text-center">
+  <h2 class="text-2xl font-bold mb-4">Memory Game</h2>
+  <!-- Simulación de tablero simple -->
+  <div class="grid grid-cols-3 gap-2 w-48 mx-auto">
+    @for (i of [1,2,3,4,5,6,7,8,9]; track i) {
+      <div class="w-14 h-14 bg-gray-800 border-2 border-green-600 hover:bg-green-900 cursor-pointer transition-colors"></div>
+    }
+  </div>
+</div>

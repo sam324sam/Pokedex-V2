@@ -1,20 +1,38 @@
-import { Component, HostListener, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { BackgroundService } from '../../services/background.service';
 import { Router } from '@angular/router';
 import { AnimationService } from '../../services/animation.service';
+import { SoundService } from '../../services/sound.service';
+import { MemoryComponent } from './components/memory-component/memory-component';
 
 @Component({
   selector: 'app-select-minigames-view',
-  imports: [],
+  imports: [MemoryComponent],
   templateUrl: './select-minigames-view.html',
   styleUrl: './select-minigames-view.css',
 })
-export class SelectMinigamesView implements OnInit{
+export class SelectMinigamesView implements OnInit {
   constructor(
     private readonly backgroundService: BackgroundService,
     private readonly router: Router,
     private readonly animationService: AnimationService,
+    private readonly soundService: SoundService,
   ) {}
+
+  currentDisplay = signal<ButtonsGame>('select');
+
+  buttons = [
+    {
+      id: 'memory' as ButtonsGame,
+      text: 'Juego de memoria basado en pokemon',
+      src: 'assets/img/icons/buttons/memory-game.png',
+    },
+    {
+      id: 'what pokemon' as ButtonsGame,
+      text: 'Juego de descubrir el pokemon misterioso',
+      src: 'assets/img/icons/buttons/description.png',
+    },
+  ];
 
   showUi = signal(false);
   timeout: number = 0;
@@ -45,6 +63,11 @@ export class SelectMinigamesView implements OnInit{
         ),
       );
     }
+  }
+
+  changeDisplay(display: ButtonsGame) {
+    this.soundService.playEfects('select');
+    this.currentDisplay.set(display);
   }
 
   /*@HostListener('document:click')
