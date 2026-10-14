@@ -4,7 +4,13 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-%23007ACC?style=flat-square&logo=typescript)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-%2338B2AC?style=flat-square&logo=tailwindcss)
 
-Una nueva versión mejorada de mi anterior Pokedex ahora realizada con angular y con lo que he aprendido desde que la cree
+Una nueva versión mejorada de mi anterior Pokedex ahora realizada con angular y con lo que he aprendido desde que la cree.
+Inspirada en la del mod [cobblemon](https://cobblemon.com/en)
+
+<img src="gitAssests/PokeAngular.gif" alt="Presentacion de pokeApi"></img>
+
+<img src="gitAssests/Pokeview.gif" alt="Presentacion de pokeApi"></img>
+
 
 ## Programas usados
 
